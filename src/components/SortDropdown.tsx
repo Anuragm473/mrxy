@@ -1,18 +1,29 @@
 'use client';
 
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
+import { useState, useRef, useEffect } from 'react';
 
 interface SortDropdownProps {
   currentSort?: string;
 }
 
+const sortOptions = [
+  { value: '', label: 'Default' },
+  { value: 'newest', label: 'Newest First' },
+  { value: 'price-asc', label: 'Price: Low → High' },
+  { value: 'price-desc', label: 'Price: High → Low' },
+];
+
 export default function SortDropdown({ currentSort }: SortDropdownProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
+  const currentOption = sortOptions.find(option => option.value === currentSort) || sortOptions[0];
+
+  const handleSortChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
     
     if (value) {
@@ -22,25 +33,61 @@ export default function SortDropdown({ currentSort }: SortDropdownProps) {
     }
     
     router.push(`${pathname}?${params.toString()}`);
+    setIsOpen(false);
   };
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
-    <div className="relative">
-      <select
-        className="appearance-none bg-white border border-gray-300 text-sm px-4 py-2 pr-8 focus:outline-none focus:border-black cursor-pointer"
-        onChange={handleSortChange}
-        value={currentSort || ""}
+    <div className="relative" ref={dropdownRef}>
+      <label className="block text-xs font-medium tracking-[0.1em] text-black uppercase mb-2">
+        Sort By
+      </label>
+      
+      {/* Custom Select Button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full min-w-[180px] flex items-center justify-between px-4 py-3 bg-white border border-gray-200 text-sm font-light text-black hover:border-black focus:outline-none focus:border-black transition-colors duration-200"
       >
-        <option value="">Sort By</option>
-        <option value="price-asc">Price: Low → High</option>
-        <option value="price-desc">Price: High → Low</option>
-        <option value="newest">Newest</option>
-      </select>
-      <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-        <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        <span>{currentOption.label}</span>
+        <svg 
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          fill="none" 
+          stroke="currentColor" 
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
         </svg>
-      </div>
+      </button>
+
+      {/* Custom Dropdown Menu */}
+      {isOpen && (
+        <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 shadow-lg z-50">
+          {sortOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => handleSortChange(option.value)}
+              className={`w-full px-4 py-3 text-left text-sm transition-colors duration-200 ${
+                option.value === currentSort
+                  ? 'bg-black text-white'
+                  : 'text-black hover:bg-gray-50'
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

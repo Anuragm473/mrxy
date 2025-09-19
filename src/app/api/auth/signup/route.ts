@@ -1,35 +1,41 @@
 import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
-import { hashPassword, generateToken } from "@/lib/auth";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export async function POST(req: Request) {
   try {
     await dbConnect();
-    const { firstName, lastName, email, password, addresses, role } =
-      await req.json();
+    const { firstName, lastName, email, password, guestCart } = await req.json();
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return NextResponse.json({ error: "Email already exists" }, { status: 400 });
+    const existing = await User.findOne({ email });
+    if (existing) {
+      return NextResponse.json({ error: "Email already registered" }, { status: 400 });
     }
 
-    const hashedPassword = await hashPassword(password);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = await User.create({
+    const user = new User({
       firstName,
       lastName,
       email,
       password: hashedPassword,
-      addresses,
-      role,
+      cart: guestCart || [], // merge guest cart at signup
     });
 
-    const token = generateToken(user);
+    await user.save();
+
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET!,
+      { expiresIn: "7d" }
+    );
 
     return NextResponse.json({
       token,
-      user: { id: user._id, firstName, lastName, email, role },
+      user,
+      cart: user.cart,
     });
   } catch (error) {
     console.error(error);

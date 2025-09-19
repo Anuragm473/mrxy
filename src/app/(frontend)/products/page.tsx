@@ -2,6 +2,7 @@ import Link from "next/link";
 import Product from "@/models/Product";
 import dbConnect from "@/lib/db";
 import SortDropdown from "@/components/SortDropdown";
+import FiltersPanel from "@/components/FiltersPanelProps";
 
 interface ProductsPageProps {
   searchParams: {
@@ -10,6 +11,7 @@ interface ProductsPageProps {
     sort?: string;
     minPrice?: string;
     maxPrice?: string;
+    inStock?: string;
   };
 }
 
@@ -21,6 +23,13 @@ async function getProducts(filters: ProductsPageProps["searchParams"]) {
   if (filters.category) query.category = filters.category;
   if (filters.color) query.color = filters.color;
 
+  // Stock filter
+  if (filters.inStock === 'true') {
+    query.stock = { $gt: 0 };
+  } else if (filters.inStock === 'false') {
+    query.stock = { $lte: 0 };
+  }
+
   if (filters.minPrice || filters.maxPrice) {
     query.discountedPrice = {};
     if (filters.minPrice) query.discountedPrice.$gte = Number(filters.minPrice);
@@ -30,6 +39,7 @@ async function getProducts(filters: ProductsPageProps["searchParams"]) {
   let sortOption: any = { createdAt: -1 }; // Default: Newest first
   if (filters.sort === "price-asc") sortOption = { discountedPrice: 1 };
   if (filters.sort === "price-desc") sortOption = { discountedPrice: -1 };
+  if (filters.sort === "newest") sortOption = { createdAt: -1 };
 
   const products = await Product.find(query).sort(sortOption).lean();
   return products.map((p) => ({
@@ -46,120 +56,204 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <div className="border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 py-8">
-          <h1 className="text-4xl font-light tracking-wide text-black">Products</h1>
-        </div>
-      </div>
-
-      {/* Filters & Navigation */}
+      {/* Minimal Header */}
       <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-            {/* Category Filters */}
-            <nav className="flex flex-wrap gap-1">
-              <Link
-                href="/products"
-                className={`px-4 py-2 text-sm font-medium transition-colors duration-200 ${
-                  !searchParams.category 
-                    ? 'text-black border-b-2 border-black' 
-                    : 'text-gray-600 hover:text-black border-b-2 border-transparent hover:border-gray-300'
-                }`}
-              >
-                All
-              </Link>
-              {categories.map((cat) => (
-                <Link
-                  key={cat}
-                  href={`/products?category=${encodeURIComponent(cat)}`}
-                  className={`px-4 py-2 text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                    searchParams.category === cat
-                      ? 'text-black border-b-2 border-black'
-                      : 'text-gray-600 hover:text-black border-b-2 border-transparent hover:border-gray-300'
-                  }`}
-                >
-                  {cat}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Sort Dropdown - Now as Client Component */}
-            <SortDropdown currentSort={searchParams.sort} />
-          </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+          <h1 className="text-3xl sm:text-4xl font-light tracking-[0.02em] text-black">Products</h1>
         </div>
       </div>
 
-      {/* Products Section */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        {/* Results Count */}
-        <div className="mb-8">
-          <p className="text-sm text-gray-600 font-light">
-            {products.length} {products.length === 1 ? 'product' : 'products'}
-          </p>
-        </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 py-8 lg:py-12">
+          {/* Left Sidebar - Filters */}
+          <aside className="lg:w-64 xl:w-80 flex-shrink-0">
+            <div className="sticky top-8">
+              {/* Results Count & Sort */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-4 lg:gap-6 mb-8 lg:mb-12">
+                <div className="flex-1">
+                  <p className="text-sm text-gray-600 font-light">
+                    {products.length} {products.length === 1 ? 'product' : 'products'}
+                  </p>
+                </div>
+                <div className="flex-shrink-0">
+                  <SortDropdown currentSort={searchParams.sort} />
+                </div>
+              </div>
 
-        {/* Products Grid */}
-        {products.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-16 h-16 mx-auto mb-4 border border-gray-200 rounded-full flex items-center justify-center">
-              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-              </svg>
+              {/* Category Navigation */}
+              <div className="mb-8 lg:mb-12">
+                <h3 className="text-xs font-medium tracking-[0.1em] text-black uppercase mb-4">Category</h3>
+                <nav className="space-y-1">
+                  <Link
+                    href="/products"
+                    className={`block py-2 text-sm transition-colors duration-200 ${
+                      !searchParams.category 
+                        ? 'text-black font-medium' 
+                        : 'text-gray-600 hover:text-black'
+                    }`}
+                  >
+                    All Products
+                  </Link>
+                  {categories.map((cat) => (
+                    <Link
+                      key={cat}
+                      href={`/products?category=${encodeURIComponent(cat)}`}
+                      className={`block py-2 text-sm transition-colors duration-200 ${
+                        searchParams.category === cat
+                          ? 'text-black font-medium'
+                          : 'text-gray-600 hover:text-black'
+                      }`}
+                    >
+                      {cat}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+
+              {/* Filters Panel */}
+              <FiltersPanel searchParams={searchParams} />
             </div>
-            <h3 className="text-lg font-light text-black mb-2">No products found</h3>
-            <p className="text-sm text-gray-500">Try adjusting your filters or browse all products</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <Link
-                key={product._id}
-                href={`/product/${product.slug}`}
-                className="group block"
-              >
-                {/* Product Image */}
-                <div className="aspect-square mb-4 overflow-hidden bg-gray-50">
-                  <img
-                    src={product.images[0] || "/default-cap.jpg"}
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+          </aside>
 
-                {/* Product Info */}
-                <div className="space-y-1">
-                  <h3 className="text-sm font-medium text-black group-hover:text-gray-600 transition-colors duration-200 line-clamp-2">
-                    {product.name}
-                  </h3>
+          {/* Main Content */}
+          <main className="flex-1">
+            {/* Products Grid */}
+            {products.length === 0 ? (
+              <div className="text-center py-20 lg:py-32">
+                <div className="w-20 h-20 mx-auto mb-6 border border-gray-200 flex items-center justify-center">
+                  <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                </div>
+                <h3 className="text-lg font-light text-black mb-2">No products found</h3>
+                <p className="text-sm text-gray-500">Try adjusting your filters or browse all products</p>
+                <Link 
+                  href="/products" 
+                  className="inline-block mt-6 px-6 py-2 border border-black text-sm font-medium text-black hover:bg-black hover:text-white transition-colors duration-200"
+                >
+                  View All Products
+                </Link>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+                {products.map((product:any) => {
+                  const hasDiscount = product.discountedPrice && product.price !== product.discountedPrice;
+                  const discountPercentage = hasDiscount 
+                    ? Math.round(((product.price - product.discountedPrice) / product.price) * 100)
+                    : 0;
                   
-                  {/* Price */}
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-black">
-                      ₹{product.discountedPrice || product.price}
-                    </span>
-                    {product.discountedPrice && product.price !== product.discountedPrice && (
-                      <span className="text-xs text-gray-500 line-through">
-                        ₹{product.price}
-                      </span>
-                    )}
-                  </div>
+                  return (
+                    <Link
+                      key={product._id}
+                      href={`/product/${product.slug}`}
+                      className="group block"
+                    >
+                      {/* Product Card Container */}
+                      <div className="bg-white border border-gray-100 group-hover:border-gray-200 transition-all duration-300 group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                        {/* Product Image Container */}
+                        <div className="aspect-square overflow-hidden bg-gray-50 relative">
+                          <img
+                            src={product.images[0] || "/categories/baseball.jpg"}
+                            alt={product.name}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                          />
+                          
+                          {/* Sale Badge */}
+                          {hasDiscount && (
+                            <div className="absolute top-3 left-3 z-10">
+                              <div className="bg-black text-white px-2 py-1 text-xs font-medium tracking-[0.05em] uppercase">
+                                -{discountPercentage}%
+                              </div>
+                            </div>
+                          )}
+                          
+                          {/* Stock indicator overlay */}
+                          {/* {product.stock <= 0 && (
+                            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-20">
+                              <div className="text-center">
+                                <div className="w-12 h-12 mx-auto mb-2 border-2 border-gray-300 rounded-full flex items-center justify-center">
+                                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
+                                </div>
+                                <span className="text-xs font-medium text-gray-600 tracking-[0.1em] uppercase">Out of Stock</span>
+                              </div>
+                            </div>
+                          )} */}
+                          
+                          {/* Quick View Hint */}
+                          <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 transform translate-y-2 group-hover:translate-y-0">
+                              <div className="bg-white px-4 py-2 text-xs font-medium text-black tracking-[0.1em] uppercase shadow-lg">
+                                View Details
+                              </div>
+                            </div>
+                          </div>
+                        </div>
 
-                  {/* Category & Color */}
-                  <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <span>{product.category}</span>
-                    {product.color && (
-                      <>
-                        <span>•</span>
-                        <span>{product.color}</span>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
+                        {/* Product Info */}
+                        <div className="p-4 space-y-3">
+                          <div className="space-y-2">
+                            <h3 className="text-sm font-light text-black group-hover:text-gray-700 transition-colors duration-200 leading-5 line-clamp-2">
+                              {product.name}
+                            </h3>
+                            
+                            {/* Category & Color */}
+                            <div className="flex items-center gap-2 text-xs text-gray-400 font-light">
+                              <span>{product.category}</span>
+                              {product.color && (
+                                <>
+                                  <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                                  <span>{product.color}</span>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                          
+                          {/* Price Section */}
+                          <div className="pt-1 border-t border-gray-50">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-baseline gap-2">
+                                <span className="text-base font-medium text-black">
+                                  ₹{product.discountedPrice || product.price}
+                                </span>
+                                {hasDiscount && (
+                                  <span className="text-sm text-gray-500 line-through">
+                                    ₹{product.price}
+                                  </span>
+                                )}
+                              </div>
+                              
+                              {/* Stock Status Indicator */}
+                              {/* <div className="flex items-center">
+                                <div className={`w-2 h-2 rounded-full ${
+                                  product.stock > 0 ? 'bg-green-400' : 'bg-red-400'
+                                }`}></div>
+                                <span className="ml-2 text-xs text-gray-500 font-light">
+                                  {product.stock > 0 ? 'In Stock' : 'Sold Out'}
+                                </span>
+                              </div>
+                            </div> */}
+                            
+                            {/* Savings indicator for discounted items */}
+                            {hasDiscount && (
+                              <div className="mt-2">
+                                <span className="text-xs text-green-600 font-medium">
+                                  Save ₹{product.price - product.discountedPrice}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
     </div>
   );

@@ -16,11 +16,11 @@ export async function DELETE(req: Request, { params }: Params) {
     }
 
     const token = authHeader.split(" ")[1];
-    const decoded: any = verifyToken(token);
+    const decoded:any = verifyToken(token);
 
     const user = await User.findById(decoded.id);
     user.cart = user.cart.filter(
-      (item: any) => item.productId.toString() !== params.productId
+      (item:any) => item.productId.toString() !== params.productId
     );
     await user.save();
 

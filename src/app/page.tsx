@@ -3,6 +3,7 @@ import Link from "next/link";
 import Product from "@/models/Product";
 import dbConnect from "@/lib/db";
 import { Metadata } from "next";
+import ProductCards from "@/components/ProductCards";
 
 export const metadata: Metadata = {
   title: "Mr.Xy - Premium Headwear Collection | Baseball Caps, Snapbacks & More",
@@ -199,7 +200,7 @@ export default async function HomePage() {
       
       <div className="min-h-screen">
         {/* Hero Section */}
-        <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+        <section className="relative h-screen min-h-[600px] max-h-[380px] flex items-center justify-center overflow-hidden">
           {/* Background Image with Optimization */}
           <div className="absolute inset-0 z-0">
             <picture>
@@ -267,11 +268,11 @@ export default async function HomePage() {
           </div>
 
           {/* Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+          {/* <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
             </svg>
-          </div>
+          </div> */}
         </section>
 
         {/* Categories Section */}
@@ -382,6 +383,45 @@ export default async function HomePage() {
           </section>
         )}
 
+        <section className="relative h-[60vh] flex items-center justify-center bg-[url('/hero-desktop.png')] bg-cover bg-center">
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
+
+      {/* Content */}
+      <div className="relative z-10 max-w-[850px] text-center bg-black px-8 py-12 rounded-lg">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4">
+          New Releases
+        </h2>
+        <p className="text-gray-500 mb-6 text-lg md:text-xl font-semibold">
+          Versatile Caps for every vibe, whether you are hitting the streets or
+          just chilling at home
+        </p>
+        <Link
+          href="/products"
+          className="inline-block px-8 py-3 bg-white text-black font-semibold rounded-full shadow-lg hover:bg-gray-200 transition"
+        >
+          All Products
+        </Link>
+      </div>
+    </section>
+<div className="bg-black text-white font-bold text-lg py-3 overflow-hidden relative">
+      <div className="animate-marquee whitespace-nowrap flex">
+        <span className="mx-8">
+          FLAT 10% OFF ON PREPAID ORDERS + FREE SHIPPING!
+        </span>
+        <span className="mx-8">
+          FLAT 10% OFF ON PREPAID ORDERS + FREE SHIPPING!
+        </span>
+        <span className="mx-8">
+          FLAT 10% OFF ON PREPAID ORDERS + FREE SHIPPING!
+        </span>
+        <span className="mx-8">
+          FLAT 10% OFF ON PREPAID ORDERS + FREE SHIPPING!
+        </span>
+      </div>
+    </div>
+
+    <ProductCards/>
         {/* Features Section */}
         <section className="py-20 bg-gray-900 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
