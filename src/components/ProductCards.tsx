@@ -47,7 +47,7 @@ export default function ProductCards() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:3000/api/products");
+        const res =await fetch("/api/products");
         const data = await res.json();
         setProducts(data);
       } catch (error) {
