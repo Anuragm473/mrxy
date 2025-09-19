@@ -227,6 +227,7 @@ export function Navbar() {
               )}
             </div>
 
+<div className="flex gap-4">
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -253,6 +254,15 @@ export function Navbar() {
                 )}
               ></span>
             </button>
+            <Link href="/cart" className="relative">
+                🛒
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+              </div>
           </div>
         </div>
 
