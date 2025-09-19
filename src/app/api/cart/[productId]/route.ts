@@ -3,11 +3,8 @@ import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { verifyToken } from "@/lib/auth";
 
-interface Params {
-  params: { productId: string };
-}
 
-export async function DELETE(req: Request, { params }: Params) {
+export async function DELETE(req:any, { params }: any) {
   await dbConnect();
   try {
     const authHeader = req.headers.get("authorization");
@@ -30,7 +27,7 @@ export async function DELETE(req: Request, { params }: Params) {
   }
 }
 
-export async function PATCH(req: Request, { params }: Params) {
+export async function PATCH(req:any, { params }:any) {
   await dbConnect();
   try {
     const authHeader = req.headers.get("authorization");

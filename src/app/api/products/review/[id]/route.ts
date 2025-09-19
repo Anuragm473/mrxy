@@ -3,11 +3,8 @@ import dbConnect from "@/lib/db";
 import Product from "@/models/Product";
 import { verifyToken } from "@/lib/auth";
 
-interface Params {
-  params: { id: string };
-}
 
-export async function POST(req: Request, { params }: Params) {
+export async function POST(req: any, { params }: any) {
   try {
     await dbConnect();
     const authHeader = req.headers.get("authorization");

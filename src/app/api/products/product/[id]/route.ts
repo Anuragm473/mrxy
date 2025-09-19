@@ -2,11 +2,9 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Product from "@/models/Product";
 
-interface Params {
-  params: { id: string };
-}
 
-export async function GET(req: Request, { params }: Params) {
+
+export async function GET(req: any, { params }: any) {
   try {
     await dbConnect();
     const product = await Product.findById(params.id);

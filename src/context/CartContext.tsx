@@ -57,7 +57,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCart(res.data);
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error fetching cart", error);
       // If token is invalid, clear it and switch to guest mode
       if (error.response?.status === 401) {
@@ -93,7 +93,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           setCart([...cart, { ...product, quantity: product.quantity || 1 }]);
         }
       }
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error adding to cart", error);
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
@@ -125,7 +125,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           )
         );
       }
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error updating quantity", error);
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
@@ -145,7 +145,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       } else {
         setCart(cart.filter((item) => item.productId !== productId));
       }
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error removing from cart", error);
       if (error.response?.status === 401) {
         localStorage.removeItem("token");
@@ -166,7 +166,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         localStorage.removeItem("cart");
       }
       setCart([]);
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error clearing cart", error);
       if (error.response?.status === 401) {
         localStorage.removeItem("token");

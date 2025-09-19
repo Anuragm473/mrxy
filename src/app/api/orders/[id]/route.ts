@@ -4,9 +4,8 @@ import dbConnect from "@/lib/db";
 import Order from "@/models/Order";
 import { verifyToken } from "@/lib/auth";
 
-interface Params { params: { id: string } }
 
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req:any, { params }: any) {
   try {
     await dbConnect();
     const authHeader = req.headers.get("authorization");
@@ -30,7 +29,7 @@ export async function GET(req: Request, { params }: Params) {
   }
 }
 
-export async function PATCH(req: Request, { params }: Params) {
+export async function PATCH(req:any, { params }:any) {
   try {
     await dbConnect();
     const authHeader = req.headers.get("authorization");

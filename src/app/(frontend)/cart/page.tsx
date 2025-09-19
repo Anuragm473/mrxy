@@ -33,7 +33,7 @@ export default function CartPage() {
 
       try {
         // Create an array of promises to fetch product data
-        const productPromises = cart.map(async (cartItem) => {
+        const productPromises = cart.map(async (cartItem:any) => {
           try {
             console.log(cartItem)
             const response = await fetch(`/api/products/product/${cartItem.productId}`);
@@ -57,11 +57,10 @@ export default function CartPage() {
           }
         });
 
-        const results = await Promise.all(productPromises);
+        const results:any = await Promise.all(productPromises);
         setCartWithProducts(results);
       } catch (error) {
         console.error('Error fetching cart products:', error);
-        setError('Failed to load cart items');
       } finally {
         setLoading(false);
       }
