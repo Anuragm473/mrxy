@@ -30,8 +30,9 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeadwearOpen, setIsHeadwearOpen] = useState(false);
+  const [isMobile,setIsMobile]=useState(false)
 
-  const { cart,refreshAuthStatus } = useCart();
+  const { cart, refreshAuthStatus } = useCart();
   const totalItems = cart?.reduce(
     (sum: number, item: any) => sum + item.quantity,
     0
@@ -46,10 +47,17 @@ export function Navbar() {
     setIsAuthenticated(!!token);
   }, [pathname]);
 
+  useEffect(()=>{
+    const handleRezise=()=>{
+      setIsMobile(window.innerWidth<786)
+    }
+    handleRezise()
+  },[])
+
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("user")
+    localStorage.removeItem("user");
     refreshAuthStatus();
     setIsAuthenticated(false);
     router.push("/");
@@ -172,7 +180,7 @@ export function Navbar() {
                         href={`/products?category=${encodeURIComponent(
                           category
                         )}`}
-                        className="block px-4 py-2 text-xs font-light tracking-wide text-white hover:text-black transition-colors duration-200"
+                        className="block px-4 py-2 text-m font-light tracking-wide text-white hover:text-black transition-colors duration-200"
                         onClick={() => setIsHeadwearOpen(false)}
                       >
                         {category}
@@ -192,14 +200,14 @@ export function Navbar() {
               </div>
 
               {/* Cart */}
-              <Link href="/cart" className="relative">
+              {!isMobile && <Link href="/cart" className="relative">
                 🛒
                 {totalItems > 0 && (
                   <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs">
                     {totalItems}
                   </span>
                 )}
-              </Link>
+              </Link>}
 
               {/* Auth Links */}
               {!isAuthenticated ? (
@@ -227,42 +235,36 @@ export function Navbar() {
               )}
             </div>
 
-<div className="flex gap-4">
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="lg:hidden relative w-5 h-5 flex flex-col justify-center items-center group"
-              aria-label="Toggle mobile menu"
-              aria-expanded={isMenuOpen}
-            >
-              <span
-                className={cn(
-                  "w-4 h-px bg-white transition-all duration-300 transform origin-center",
-                  isMenuOpen ? "rotate-45 translate-y-0" : "-translate-y-1"
-                )}
-              ></span>
-              <span
-                className={cn(
-                  "w-4 h-px bg-white transition-all duration-300",
-                  isMenuOpen ? "opacity-0" : "opacity-100"
-                )}
-              ></span>
-              <span
-                className={cn(
-                  "w-4 h-px bg-white transition-all duration-300 transform origin-center",
-                  isMenuOpen ? "-rotate-45 translate-y-0" : "translate-y-1"
-                )}
-              ></span>
-            </button>
-            <Link href="/cart" className="relative">
-                🛒
-                {totalItems > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs">
-                    {totalItems}
-                  </span>
-                )}
-              </Link>
-              </div>
+            {isMobile &&
+              (<div className="flex gap-4">
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="lg:hidden relative w-5 h-5 flex flex-col justify-center items-center group"
+                aria-label="Toggle mobile menu"
+                aria-expanded={isMenuOpen}
+              >
+                <span
+                  className={cn(
+                    "w-4 h-px bg-white transition-all duration-300 transform origin-center",
+                    isMenuOpen ? "rotate-45 translate-y-0" : "-translate-y-1"
+                  )}
+                ></span>
+                <span
+                  className={cn(
+                    "w-4 h-px bg-white transition-all duration-300",
+                    isMenuOpen ? "opacity-0" : "opacity-100"
+                  )}
+                ></span>
+                <span
+                  className={cn(
+                    "w-4 h-px bg-white transition-all duration-300 transform origin-center",
+                    isMenuOpen ? "-rotate-45 translate-y-0" : "translate-y-1"
+                  )}
+                ></span>
+              </button>
+            </div>)
+            }
           </div>
         </div>
 
@@ -288,6 +290,16 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
+
+                {isMobile && <Link href="/cart" className="relative">
+                🛒 Cart
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs">
+                    {totalItems}
+                  </span>
+                )}
+              </Link>
+}
 
             {/* Mobile Categories */}
             <div className="pt-4 border-t border-gray-100">
