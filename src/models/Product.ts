@@ -77,6 +77,6 @@ ProductSchema.pre<IProduct>("save", function (next) {
 });
 
 const Product: Model<IProduct> =
-  mongoose.models.Product || mongoose.model<IProduct>("Product", ProductSchema);
+  mongoose?.models?.Product || mongoose.model<IProduct>("Product", ProductSchema);
 
 export default Product;

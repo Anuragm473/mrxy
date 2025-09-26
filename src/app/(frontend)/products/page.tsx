@@ -3,6 +3,7 @@ import Product from "@/models/Product";
 import dbConnect from "@/lib/db";
 import SortDropdown from "@/components/SortDropdown";
 import FiltersPanel from "@/components/FiltersPanelProps";
+import MobileFilters from "@/components/MobileFilters";
 
 interface ProductsPageProps {
   searchParams: {
@@ -64,12 +65,29 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Mobile Filter Bar */}
+        <div className="lg:hidden border-b border-gray-100 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-1">
+              <p className="text-sm text-gray-600 font-light">
+                {products.length} {products.length === 1 ? 'product' : 'products'}
+              </p>
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="w-32">
+                <SortDropdown currentSort={searchParams.sort} />
+              </div>
+              <MobileFilters searchParams={searchParams} categories={categories} />
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 py-8 lg:py-12">
-          {/* Left Sidebar - Filters */}
-          <aside className="lg:w-64 xl:w-80 flex-shrink-0">
+          {/* Desktop Sidebar - Hidden on mobile */}
+          <aside className="hidden lg:block lg:w-64 xl:w-80 flex-shrink-0">
             <div className="sticky top-8">
               {/* Results Count & Sort */}
-              <div className="flex flex-col sm:flex-row lg:flex-col gap-4 lg:gap-6 mb-8 lg:mb-12">
+              <div className="flex flex-col gap-6 mb-12">
                 <div className="flex-1">
                   <p className="text-sm text-gray-600 font-light">
                     {products.length} {products.length === 1 ? 'product' : 'products'}
@@ -81,7 +99,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               </div>
 
               {/* Category Navigation */}
-              <div className="mb-8 lg:mb-12">
+              <div className="mb-12">
                 <h3 className="text-xs font-medium tracking-[0.1em] text-black uppercase mb-4">Category</h3>
                 <nav className="space-y-1">
                   <Link
@@ -136,7 +154,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-                {products.map((product:any) => {
+                {products.map((product: any) => {
                   const hasDiscount = product.discountedPrice && product.price !== product.discountedPrice;
                   const discountPercentage = hasDiscount 
                     ? Math.round(((product.price - product.discountedPrice) / product.price) * 100)
@@ -166,20 +184,6 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               </div>
                             </div>
                           )}
-                          
-                          {/* Stock indicator overlay */}
-                          {/* {product.stock <= 0 && (
-                            <div className="absolute inset-0 bg-white bg-opacity-90 flex items-center justify-center z-20">
-                              <div className="text-center">
-                                <div className="w-12 h-12 mx-auto mb-2 border-2 border-gray-300 rounded-full flex items-center justify-center">
-                                  <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                                  </svg>
-                                </div>
-                                <span className="text-xs font-medium text-gray-600 tracking-[0.1em] uppercase">Out of Stock</span>
-                              </div>
-                            </div>
-                          )} */}
                           
                           {/* Quick View Hint */}
                           <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300 flex items-center justify-center">
@@ -223,17 +227,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                                   </span>
                                 )}
                               </div>
-                              
-                              {/* Stock Status Indicator */}
-                              {/* <div className="flex items-center">
-                                <div className={`w-2 h-2 rounded-full ${
-                                  product.stock > 0 ? 'bg-green-400' : 'bg-red-400'
-                                }`}></div>
-                                <span className="ml-2 text-xs text-gray-500 font-light">
-                                  {product.stock > 0 ? 'In Stock' : 'Sold Out'}
-                                </span>
-                              </div>
-                            </div> */}
+                            </div>
                             
                             {/* Savings indicator for discounted items */}
                             {hasDiscount && (
@@ -244,7 +238,6 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                               </div>
                             )}
                           </div>
-                        </div>
                         </div>
                       </div>
                     </Link>

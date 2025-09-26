@@ -50,18 +50,19 @@ export default function SortDropdown({ currentSort }: SortDropdownProps) {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <label className="block text-xs font-medium tracking-[0.1em] text-black uppercase mb-2">
+      {/* Desktop Label - Hidden on mobile */}
+      <label className="hidden lg:block text-xs font-medium tracking-[0.1em] text-black uppercase mb-2">
         Sort By
       </label>
       
       {/* Custom Select Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full min-w-[180px] flex items-center justify-between px-4 py-3 bg-white border border-gray-200 text-sm font-light text-black hover:border-black focus:outline-none focus:border-black transition-colors duration-200"
+        className="w-full min-w-[120px] lg:min-w-[180px] flex items-center justify-between px-3 lg:px-4 py-2 lg:py-3 bg-white border border-gray-200 text-xs lg:text-sm font-light text-black hover:border-black focus:outline-none focus:border-black transition-colors duration-200"
       >
-        <span>{currentOption.label}</span>
+        <span className="truncate">{currentOption.label}</span>
         <svg 
-          className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} 
+          className={`w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0 ml-2 ${isOpen ? 'rotate-180' : ''}`} 
           fill="none" 
           stroke="currentColor" 
           viewBox="0 0 24 24"
@@ -77,7 +78,7 @@ export default function SortDropdown({ currentSort }: SortDropdownProps) {
             <button
               key={option.value}
               onClick={() => handleSortChange(option.value)}
-              className={`w-full px-4 py-3 text-left text-sm transition-colors duration-200 ${
+              className={`w-full px-3 lg:px-4 py-2 lg:py-3 text-left text-xs lg:text-sm transition-colors duration-200 ${
                 option.value === currentSort
                   ? 'bg-black text-white'
                   : 'text-black hover:bg-gray-50'
