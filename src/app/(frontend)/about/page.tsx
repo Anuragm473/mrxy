@@ -3,19 +3,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'About Us | Mr.Xy - Premium Headwear Collection',
-  description: 'Discover the story behind Mr.Xy, your premier destination for premium caps and headwear. Learn about our commitment to quality, style, and craftsmanship in every piece we create.',
-  keywords: 'about Mr.Xy, premium caps, headwear brand, quality hats, cap manufacturing, brand story, premium headwear collection',
+  title: 'About Us | Mr.XY - Beach Meets Street Premium Caps',
+  description: 'Discover Mr.XY - born where waves kiss the shore and streets never sleep. Premium caps blending beach freedom with street culture for those who live with adventure in their soul.',
+  keywords: 'about Mr.XY, beach lifestyle caps, street culture headwear, premium caps, lifestyle brand, beach streetwear, adventure caps',
   openGraph: {
-    title: 'About Mr.Xy - Premium Headwear Brand',
-    description: 'Discover the story behind Mr.Xy, your premier destination for premium caps and headwear.',
+    title: 'About Mr.XY - Where Beach Meets Street',
+    description: 'Born where the waves kiss the shore and the streets never sleep. Premium caps for adventurous souls.',
     type: 'website',
     locale: 'en_US',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'About Mr.Xy - Premium Headwear Brand',
-    description: 'Discover the story behind Mr.Xy, your premier destination for premium caps and headwear.',
+    title: 'About Mr.XY - Where Beach Meets Street',
+    description: 'Born where the waves kiss the shore and the streets never sleep. Premium caps for adventurous souls.',
   },
   alternates: {
     canonical: '/about',
@@ -31,16 +31,16 @@ const stats = [
 
 const values = [
   {
-    title: 'Quality First',
-    description: 'Every piece is crafted with premium materials and attention to detail that defines our brand.',
+    title: 'Ocean Spirit',
+    description: 'Embracing the freedom and flow of beach life, where every design captures the effortless vibe of coastal living.',
   },
   {
-    title: 'Timeless Design',
-    description: 'We create headwear that transcends trends, focusing on classic styles with modern touches.',
+    title: 'Street Edge',
+    description: 'Bold and unapologetic, our caps bring the energy of urban culture to every adventure you embark on.',
   },
   {
-    title: 'Customer Focus',
-    description: 'Your satisfaction drives everything we do, from design concepts to final delivery.',
+    title: 'Lifestyle First',
+    description: "More than headwear—we create pieces that match your rhythm, whether you're chasing waves or conquering streets.",
   },
 ]
 
@@ -54,8 +54,8 @@ export default function AboutPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Mr.Xy",
-            "description": "Premium headwear and caps brand offering quality craftsmanship and timeless designs.",
+            "name": "Mr.XY",
+            "description": "Premium caps brand blending beach lifestyle with street culture. Born where waves meet streets.",
             "url": "https://your-domain.com",
             "logo": "https://your-domain.com/logo.png",
             "sameAs": [
@@ -76,10 +76,10 @@ export default function AboutPage() {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto">
               <h1 className="text-4xl lg:text-6xl font-light tracking-tight text-black mb-8">
-                About <span className="font-normal">Mr.Xy</span>
+                About <span className="font-normal">Mr.XY</span>
               </h1>
               <p className="text-lg lg:text-xl font-light text-gray-600 leading-relaxed">
-                Where premium craftsmanship meets timeless design. We create headwear that tells your story.
+                Born where the waves kiss the shore and the streets never sleep. We blend effortless style with everyday comfort.
               </p>
             </div>
           </div>
@@ -96,13 +96,13 @@ export default function AboutPage() {
                   </h2>
                   <div className="space-y-6 text-gray-600 font-light leading-relaxed">
                     <p>
-                      Born from a passion for authentic style and quality craftsmanship, Mr.Xy began as a vision to create headwear that transcends fleeting trends and becomes part of your personal story.
+                      Mr.XY was born where the waves kiss the shore and the streets never sleep. Inspired by the calm of the beach and the energy of city life, our caps blend effortless style with everyday comfort.
                     </p>
                     <p>
-                      Every cap in our collection represents hours of meticulous design and construction, using only the finest materials sourced from trusted suppliers worldwide.
+                      Each design carries the free spirit of the ocean and the bold edge of streetwear, making Mr.XY more than just a cap—it's a lifestyle.
                     </p>
                     <p>
-                      What started as a small venture has grown into a brand trusted by thousands who appreciate the intersection of comfort, durability, and timeless aesthetic.
+                      From sandy beaches to bustling streets, Mr.XY is made for those who live with adventure in their soul and style on their mind.
                     </p>
                   </div>
                 </div>
@@ -111,8 +111,8 @@ export default function AboutPage() {
               <div className="relative">
                 <div className="aspect-square bg-gray-50 rounded-sm overflow-hidden">
                   <Image
-                    src="/about-image.jpg"
-                    alt="Mr.Xy craftsmanship process showing premium cap construction"
+                    src="/about-image.png"
+                    alt="Mr.XY lifestyle - beach meets street culture caps"
                     width={600}
                     height={600}
                     className="w-full h-full object-cover"
@@ -150,7 +150,7 @@ export default function AboutPage() {
                 What We Stand For
               </h2>
               <p className="text-lg font-light text-gray-600 max-w-2xl mx-auto">
-                Our principles guide every decision we make, from material selection to customer service.
+                Our principles guide every decision we make, from design inspiration to the lifestyle we represent.
               </p>
             </div>
             
@@ -176,8 +176,8 @@ export default function AboutPage() {
               Our Mission
             </h2>
             <p className="text-xl lg:text-2xl font-light text-gray-600 leading-relaxed mb-8">
-              To create premium headwear that becomes an extension of your personality, 
-              crafted with integrity and designed to accompany you on life's journey.
+              To create caps that embody the perfect balance of beach serenity and street culture, 
+              for those who refuse to choose between comfort and style, adventure and authenticity.
             </p>
             <Link 
               href="/products"
@@ -195,7 +195,7 @@ export default function AboutPage() {
               Get in Touch
             </h2>
             <p className="text-lg font-light text-gray-600 mb-8 leading-relaxed">
-              Have questions about our products or want to learn more about our brand? 
+              Have questions about our products or want to learn more about the Mr.XY lifestyle? 
               We'd love to hear from you.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

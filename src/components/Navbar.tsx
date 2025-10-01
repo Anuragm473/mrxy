@@ -5,12 +5,14 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useCart } from "@/context/CartContext";
+import Image from "next/image";
 
 const categories = [
   "Basic",
   "Baseball",
   "Snapback",
   "Trucker",
+  "Alpha Gen Kids",
   "Fitted Cap",
   "Exclusive Collection",
 ];
@@ -114,9 +116,17 @@ export function Navbar() {
               className="flex-shrink-0 group z-10"
               aria-label="Mr.Xy Home"
             >
-              <span className="text-lg sm:text-xl lg:text-2xl font-light tracking-widest text-white transition-opacity duration-300 group-hover:opacity-70">
+              {/* <span className="text-lg sm:text-xl lg:text-2xl font-light tracking-widest text-white transition-opacity duration-300 group-hover:opacity-70">
                 Mr.Xy
-              </span>
+              </span> */}
+              <div className="w-[70px] h-[70px] flex items-center justify-center bg-black/95 rounded-lg">
+  <Image 
+    src="/logo.png" 
+    alt="logo image" 
+    width={60}   // slightly smaller so it fits nicely
+    height={60} 
+  />
+</div>
             </Link>
 
             {/* Desktop Navigation */}

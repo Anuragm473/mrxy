@@ -4,16 +4,18 @@ import Product from "@/models/Product";
 import dbConnect from "@/lib/db";
 import { Metadata } from "next";
 import ProductCards from "@/components/ProductCards";
+import TaglineSlideshow from "@/components/TageLine";
 
 export const metadata: Metadata = {
   title: "Mr.Xy - Premium Headwear Collection | Baseball Caps, Snapbacks & More",
-  description: "Discover Mr.Xy's exclusive collection of premium headwear. Shop baseball caps, snapbacks, trucker hats, fitted caps & exclusive designs. Free shipping on orders over ₹999.",
+  description: "Discover Mr.Xy's exclusive collection of premium headwear. Shop baseball caps, snapbacks, trucker hats,alpha gen kids, fitted caps & exclusive designs. Free shipping on orders over ₹999.",
   keywords: [
     "premium caps",
     "baseball caps online",
     "snapback caps",
     "fitted caps",
     "trucker caps",
+    "alpha gen kids caps",
     "exclusive headwear",
     "Mr.Xy caps",
     "buy caps online India",
@@ -75,7 +77,7 @@ const jsonLd = {
   "@type": "Store",
   name: "Mr.Xy",
   image: "https://mrxy.com/logo.jpg",
-  description: "Premium headwear store offering baseball caps, snapbacks, trucker caps, and exclusive collections.",
+  description: "Premium headwear store offering baseball caps, snapbacks, trucker caps,alpha gen kids, and exclusive collections.",
   url: "https://mrxy.com",
   telephone: "+91-XXXXXXXXXX",
   address: {
@@ -144,7 +146,14 @@ const categories = [
     alt: "Exclusive designer caps collection",
     description: "Limited edition designer headwear"
   },
+  { 
+    name: "Alpha Gen Kids", 
+    img: "/categories/exclusive.jpg",
+    alt: "Trendy caps for Alpha Gen kids",
+    description: "Cool and stylish caps designed for the young Alpha Gen kids"
+  },
 ];
+
 
 const features = [
   {
@@ -285,6 +294,12 @@ export default async function HomePage() {
                 <span className="whitespace-nowrap">Premium Quality Guarantee</span>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section className="py-6 xs:py-8 sm:py-10 bg-gray-900">
+          <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
+            <TaglineSlideshow/>
           </div>
         </section>
 

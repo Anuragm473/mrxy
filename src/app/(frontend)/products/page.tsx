@@ -53,7 +53,7 @@ async function getProducts(filters: ProductsPageProps["searchParams"]) {
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const products = await getProducts(searchParams);
-  const categories = ["Basic", "Baseball", "Snapback", "Trucker", "Fitted Cap", "Exclusive Collection"];
+  const categories = ["Basic", "Baseball", "Snapback", "Trucker", "Fitted Cap", "Exclusive Collection","Alpha Gen Kids"];
 
   return (
     <div className="min-h-screen bg-white">

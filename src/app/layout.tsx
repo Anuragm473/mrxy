@@ -18,9 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Mr.Xy - Premium Headwear Store",
   description:
-    "Shop stylish headwear at Mr.Xy: Baseball, Snapback, Trucker, Fitted, and Exclusive collections.",
+    "Shop stylish headwear at Mr.Xy: Baseball, Snapback, Trucker,Alpha gen kids, Fitted, and Exclusive collections.",
   keywords:
-    "caps, snapback, fitted cap, baseball cap, trucker cap, headwear, Mr.Xy",
+    "caps, snapback, fitted cap, baseball cap, trucker cap,alpha gen kids cap, headwear, Mr.Xy",
   openGraph: {
     title: "Mr.Xy - Premium Headwear Store",
     description:

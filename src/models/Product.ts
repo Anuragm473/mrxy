@@ -19,7 +19,8 @@ export interface IProduct extends Document {
     | "Snapback"
     | "Trucker"
     | "Fitted Cap"
-    | "Exclusive Collection";
+    | "Exclusive Collection"
+    | "Alpha Gen Kids";
   price: number;
   discountedPrice?: number;
   images: string[]; // Cloudinary URLs
@@ -55,6 +56,7 @@ const ProductSchema = new Schema<IProduct>(
         "Trucker",
         "Fitted Cap",
         "Exclusive Collection",
+        "Alpha Gen Kids"
       ],
       required: true,
     },

@@ -39,7 +39,12 @@ const categories = [
     img: "/categories/exclusive.jpg",
     alt: "Exclusive designer caps collection",
     description: "Limited edition designer headwear"
-  },
+  },{ 
+    name: "Alpha Gen Kids", 
+    img: "/categories/exclusive.jpg",
+    alt: "Trendy caps for Alpha Gen kids",
+    description: "Cool and stylish caps designed for the young Alpha Gen kids"
+  }
 ];
 
 // Generate metadata for SEO
