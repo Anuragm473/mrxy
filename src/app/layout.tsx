@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
+import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,10 +45,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
+      <Head>
         <meta name="color-scheme" content="light only"/>
         <meta name="theme-color" content="#000000" />
-      </head>
+      </Head>
       <body className="min-h-screen flex flex-col">
         <CartProvider>
           <div className="bg-white black text-xl my-3 center font-bold text-center">Get 10% OFF on Prepaid Orders</div>
