@@ -1,12 +1,19 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
+import slugify from "slugify";
 
 function ProductCard({ product }:{product:any}) {
+  const router=useRouter()
   const { name, price, discountedPrice, images } = product;
 
   return (
-    <div className="w-full flex-shrink-0 px-2">
+    <div 
+    onClick={()=>{router.push( `product/${slugify(name,{
+      lower:true
+    })}`)}}
+    className="w-full flex-shrink-0 px-2">
       <div className="bg-white shadow-lg rounded-xl overflow-hidden">
         <img
           src={images[0]}
@@ -150,7 +157,7 @@ export default function ProductCards() {
         >
           {products.map((product:any) => (
             <div
-              key={product._id}
+              key={product._id} 
               style={{ width: `${100 / limit}%` }}
               className="flex-shrink-0"
             >

@@ -44,6 +44,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta name="color-scheme" content="light only"/>
+        <meta name="theme-color" content="#000000" />
+      </head>
       <body className="min-h-screen flex flex-col">
         <CartProvider>
           <div className="bg-white black text-xl my-3 center font-bold text-center">Get 10% OFF on Prepaid Orders</div>
