@@ -5,12 +5,12 @@ import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
-  const { setCart,refreshAuthStatus } = useCart();
+  const { setCart, refreshAuthStatus } = useCart();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const router=useRouter()
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,13 +30,13 @@ export default function LoginForm() {
       if (!res.ok) throw new Error(data.error || "Login failed");
 
       localStorage.setItem("token", JSON.stringify(data.token));
-      localStorage.setItem("user",JSON.stringify(data.user))
-      refreshAuthStatus()
+      localStorage.setItem("user", JSON.stringify(data.user));
+      refreshAuthStatus();
       localStorage.removeItem("cart"); // clear guest cart
 
       setCart(data.cart); // sync with backend cart
       alert("Login successful!");
-      router.push('/')
+      router.push("/");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -47,7 +47,9 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleLogin}
-      className="max-w-md mx-auto p-6 bg-white shadow rounded"
+      className="max-w-md mx-auto p-6 
+                 bg-white text-black shadow rounded 
+                 dark:bg-gray-900 dark:text-white"
     >
       <h2 className="text-2xl font-bold mb-4">Login</h2>
 
@@ -56,7 +58,9 @@ export default function LoginForm() {
       <input
         type="email"
         placeholder="Email"
-        className="w-full border p-2 mb-3 rounded"
+        className="w-full border p-2 mb-3 rounded 
+                   bg-gray-50 text-black 
+                   dark:bg-gray-800 dark:text-white dark:border-gray-600"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         required
@@ -65,7 +69,9 @@ export default function LoginForm() {
       <input
         type="password"
         placeholder="Password"
-        className="w-full border p-2 mb-3 rounded"
+        className="w-full border p-2 mb-3 rounded 
+                   bg-gray-50 text-black 
+                   dark:bg-gray-800 dark:text-white dark:border-gray-600"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         required
@@ -74,7 +80,9 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+        className="w-full bg-black text-white py-2 rounded 
+                   hover:bg-gray-800 
+                   dark:bg-yellow-500 dark:hover:bg-yellow-600 dark:text-black"
       >
         {loading ? "Logging in..." : "Login"}
       </button>

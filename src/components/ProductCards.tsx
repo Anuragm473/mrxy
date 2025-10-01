@@ -4,30 +4,40 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import slugify from "slugify";
 
-function ProductCard({ product }:{product:any}) {
-  const router=useRouter()
+function ProductCard({ product }: { product: any }) {
+  const router = useRouter();
   const { name, price, discountedPrice, images } = product;
 
   return (
-    <div 
-    onClick={()=>{router.push( `product/${slugify(name,{
-      lower:true
-    })}`)}}
-    className="w-full flex-shrink-0 px-2">
-      <div className="bg-white shadow-lg rounded-xl overflow-hidden">
+    <div
+      onClick={() => {
+        router.push(
+          `product/${slugify(name, {
+            lower: true,
+          })}`
+        );
+      }}
+      className="w-full flex-shrink-0 px-2"
+    >
+      <div className="bg-white shadow-lg rounded-xl overflow-hidden 
+                      dark:bg-gray-900 dark:text-white">
         <img
           src={images[0]}
           alt={name}
           className="w-full h-52 object-cover"
         />
-        <span className="inline-block mt-2 ml-2 px-3 py-1 text-sm font-bold text-white bg-black rounded-full">
+        <span className="inline-block mt-2 ml-2 px-3 py-1 text-sm font-bold 
+                        text-white bg-black rounded-full 
+                        dark:bg-yellow-500 dark:text-black">
           Sale
         </span>
         <div className="p-4">
           <h3 className="text-lg font-semibold mb-2">{name}</h3>
           <div className="flex gap-2 items-center">
             <span className="line-through text-gray-400">INR {price}</span>
-            <span className="font-bold text-black">INR {discountedPrice}</span>
+            <span className="font-bold text-black dark:text-yellow-400">
+              INR {discountedPrice}
+            </span>
           </div>
         </div>
       </div>
@@ -78,11 +88,11 @@ export default function ProductCards() {
 
   const maxIndex = Math.max(0, products.length - limit);
 
-  const getPositionX = (e:any) => {
+  const getPositionX = (e: any) => {
     return e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
   };
 
-  const handleDragStart = (e:any) => {
+  const handleDragStart = (e: any) => {
     setIsDragging(true);
     setStartPos(getPositionX(e));
     if (carouselRef.current) {
@@ -90,7 +100,7 @@ export default function ProductCards() {
     }
   };
 
-  const handleDragMove = (e:any) => {
+  const handleDragMove = (e: any) => {
     if (!isDragging) return;
     const currentPosition = getPositionX(e);
     const diff = currentPosition - startPos;
@@ -135,7 +145,8 @@ export default function ProductCards() {
   };
 
   return (
-    <section className="max-w-[1600px] m-auto py-12 bg-gray-50">
+    <section className="max-w-[1600px] m-auto py-12 
+                        bg-gray-50 dark:bg-gray-950 dark:text-white">
       <h2 className="text-3xl font-bold text-center mb-8">Featured Products</h2>
 
       <div className="relative overflow-hidden px-6">
@@ -155,9 +166,9 @@ export default function ProductCards() {
           onTouchMove={handleDragMove}
           onTouchEnd={handleDragEnd}
         >
-          {products.map((product:any) => (
+          {products.map((product: any) => (
             <div
-              key={product._id} 
+              key={product._id}
               style={{ width: `${100 / limit}%` }}
               className="flex-shrink-0"
             >
@@ -171,7 +182,9 @@ export default function ProductCards() {
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
-          className="px-4 py-2 bg-black text-white rounded-full disabled:opacity-50 hover:bg-gray-800 transition"
+          className="px-4 py-2 bg-black text-white rounded-full disabled:opacity-50 
+                     hover:bg-gray-800 transition
+                     dark:bg-yellow-500 dark:text-black dark:hover:bg-yellow-600"
         >
           Prev
         </button>
@@ -181,7 +194,7 @@ export default function ProductCards() {
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               className={`w-2 h-2 rounded-full transition ${
-                idx === currentIndex ? "bg-black w-6" : "bg-gray-300"
+                idx === currentIndex ? "bg-black w-6 dark:bg-yellow-500" : "bg-gray-300 dark:bg-gray-600"
               }`}
             />
           ))}
@@ -189,14 +202,18 @@ export default function ProductCards() {
         <button
           onClick={handleNext}
           disabled={currentIndex === maxIndex}
-          className="px-4 py-2 bg-black text-white rounded-full disabled:opacity-50 hover:bg-gray-800 transition"
+          className="px-4 py-2 bg-black text-white rounded-full disabled:opacity-50 
+                     hover:bg-gray-800 transition
+                     dark:bg-yellow-500 dark:text-black dark:hover:bg-yellow-600"
         >
           Next
         </button>
       </div>
 
       <div className="flex justify-center mt-8">
-        <button className="px-8 py-3 bg-black text-white font-bold rounded-full hover:bg-gray-800 transition">
+        <button className="px-8 py-3 bg-black text-white font-bold rounded-full 
+                           hover:bg-gray-800 transition
+                           dark:bg-yellow-500 dark:text-black dark:hover:bg-yellow-600">
           View All
         </button>
       </div>

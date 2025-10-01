@@ -54,7 +54,7 @@ export function Navbar() {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 1024); // Changed to lg breakpoint (1024px)
     };
-    
+
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
@@ -110,24 +110,28 @@ export function Navbar() {
       >
         <div className="max-w-[1450px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
           <div className="flex justify-between items-center h-14 sm:h-16 lg:h-18">
+
             {/* Logo */}
             <Link
-              href="/"
-              className="flex-shrink-0 group z-10"
-              aria-label="Mr.Xy Home"
-            >
-              {/* <span className="text-lg sm:text-xl lg:text-2xl font-light tracking-widest text-white transition-opacity duration-300 group-hover:opacity-70">
-                Mr.Xy
-              </span> */}
-              <div className="w-[70px] h-[70px] flex items-center justify-center bg-black/95 rounded-lg">
-  <Image 
-    src="/logo.png" 
-    alt="logo image" 
-    width={60}   // slightly smaller so it fits nicely
-    height={60} 
-  />
-</div>
-            </Link>
+  href="/"
+  className="flex-shrink-0 group z-10 flex items-center h-full"
+  aria-label="Mr.Xy Home"
+>
+  <div className="h-full flex items-center">
+    <div className="overflow-hidden rounded-full w-14 h-14 flex items-center justify-center">
+      <Image
+        src="/logo.png"
+        alt="logo image"
+        width={56}   // equal width and height for perfect circle
+        height={56}
+        className="object-cover"
+      />
+    </div>
+  </div>
+</Link>
+
+
+
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
@@ -214,23 +218,23 @@ export function Navbar() {
               </div>
 
               {/* Desktop Cart */}
-              <Link 
-                href="/cart" 
+              <Link
+                href="/cart"
                 className="relative group transition-transform duration-200 hover:scale-110"
                 aria-label={`Cart with ${totalItems || 0} items`}
               >
                 <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200">
-                  <svg 
-                    className="w-4 h-4 text-white" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="w-4 h-4 text-white"
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                   >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" 
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                     />
                   </svg>
                 </div>
@@ -270,23 +274,23 @@ export function Navbar() {
             {/* Mobile Right Section */}
             <div className="flex items-center space-x-3 lg:hidden">
               {/* Mobile Cart */}
-              <Link 
-                href="/cart" 
+              <Link
+                href="/cart"
                 className="relative group transition-transform duration-200 hover:scale-110 active:scale-95"
                 aria-label={`Cart with ${totalItems || 0} items`}
               >
                 <div className="flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/10 hover:bg-white/20 active:bg-white/30 transition-colors duration-200">
-                  <svg 
-                    className="w-4 h-4 sm:w-5 sm:h-5 text-white" 
-                    fill="none" 
-                    stroke="currentColor" 
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5 text-white"
+                    fill="none"
+                    stroke="currentColor"
                     viewBox="0 0 24 24"
                     strokeWidth={1.5}
                   >
-                    <path 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" 
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
                     />
                   </svg>
                 </div>
@@ -412,14 +416,14 @@ export function Navbar() {
             <div className="pt-3 sm:pt-4 border-t border-white/10">
               {!isAuthenticated ? (
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-                  <Link 
-                    href="/login" 
+                  <Link
+                    href="/login"
                     className="text-base text-center py-3 px-4 text-white/80 hover:text-white border border-white/20 hover:border-white/40 rounded-lg transition-all duration-200 hover:bg-white/5"
                   >
                     Login
                   </Link>
-                  <Link 
-                    href="/signup" 
+                  <Link
+                    href="/signup"
                     className="text-base text-center py-3 px-4 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all duration-200 font-medium"
                   >
                     Signup
