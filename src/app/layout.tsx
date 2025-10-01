@@ -4,7 +4,6 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
-import Head from "next/head";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,11 +17,14 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Mr.Xy - Premium Headwear Store",
-  description: "Shop stylish headwear at Mr.Xy: Baseball, Snapback, Trucker, Fitted, and Exclusive collections.",
-  keywords: "caps, snapback, fitted cap, baseball cap, trucker cap, headwear, Mr.Xy",
+  description:
+    "Shop stylish headwear at Mr.Xy: Baseball, Snapback, Trucker, Fitted, and Exclusive collections.",
+  keywords:
+    "caps, snapback, fitted cap, baseball cap, trucker cap, headwear, Mr.Xy",
   openGraph: {
     title: "Mr.Xy - Premium Headwear Store",
-    description: "Discover the exclusive collection of stylish caps and headwear at Mr.Xy.",
+    description:
+      "Discover the exclusive collection of stylish caps and headwear at Mr.Xy.",
     url: "https://yourdomain.com",
     siteName: "Mr.Xy",
     images: [
@@ -40,24 +42,29 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <Head>
-        <meta name="color-scheme" content="light only"/>
+      <head>
+        {/* 👇 Prevents dark mode auto inversion on mobile */}
+        <meta name="color-scheme" content="light only" />
         <meta name="theme-color" content="#000000" />
-      </Head>
-      <body className="min-h-screen flex flex-col">
+      </head>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col bg-white text-black`}
+      >
         <CartProvider>
-          <div className="bg-white black text-xl my-3 center font-bold text-center">Get 10% OFF on Prepaid Orders</div>
-              <Navbar />
-              <main className="flex-1">{children}</main>
-              <Footer />
-              {/* <script src="https://checkout.razorpay.com/v1/checkout.js"></script> */}
-              </CartProvider>
-            </body>
+          {/* ✅ fixed "black" class → text-black */}
+          <div className="bg-white text-black text-xl my-3 font-bold text-center">
+            Get 10% OFF on Prepaid Orders
+          </div>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </CartProvider>
+      </body>
     </html>
   );
 }
