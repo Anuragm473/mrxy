@@ -120,7 +120,7 @@ export function Navbar() {
   <div className="h-full flex items-center">
     <div className="overflow-hidden rounded-full w-14 h-14 flex items-center justify-center">
       <Image
-        src="/logo.png"
+        src="/logo-y.png"
         alt="logo image"
         width={56}   // equal width and height for perfect circle
         height={56}
