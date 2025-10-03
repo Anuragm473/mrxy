@@ -288,48 +288,46 @@ export default function ContactPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 border-t border-gray-100">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-light tracking-tight text-black mb-6">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-lg font-light text-gray-600">
-                Find quick answers to common questions about our products and services.
-              </p>
-            </div>
+<section className="py-20 border-t border-gray-100">
+  <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-12">
+      <h2 className="text-3xl lg:text-4xl font-light tracking-tight text-black mb-6">
+        Frequently Asked Questions
+      </h2>
+      <p className="text-lg font-light text-gray-600">
+        Find quick answers to common questions about our products and services.
+      </p>
+    </div>
 
-            <div className="space-y-4">
-              {faqs.map((faq, index) => (
-                <div key={index} className="border border-gray-200">
-                  <button
-                    onClick={() => toggleFaq(index)}
-                    className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition-colors duration-300"
-                  >
-                    <h3 className="text-lg font-light text-black">
-                      {faq.question}
-                    </h3>
-                    <svg
-                      className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${
-                        expandedFaq === index ? 'rotate-180' : ''
-                      }`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
-                  {expandedFaq === index && (
-                    <div className="px-6 pb-4 text-gray-600 font-light leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
-                </div>
-              ))}
+    <div className="space-y-3">
+      {faqs.map((faq, index) => (
+        <div key={index} className="bg-white rounded-[6px] shadow-sm border border-gray-200 overflow-hidden">
+          <button
+            onClick={() => toggleFaq(index)}
+            className="w-full flex justify-between items-center text-left px-5 py-4 outline-none focus-visible:ring-2 focus-visible:ring-black group"
+            style={{ border: 'none' }}
+          >
+            <span className="text-base text-black font-normal">{faq.question}</span>
+            <svg
+              className={`w-5 h-5 text-gray-400 transition-transform duration-300 ${expandedFaq === index ? 'rotate-180' : ''}`}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          {expandedFaq === index && (
+            <div className="px-5 pb-4 pt-1 text-gray-600 border-t border-gray-100 font-normal leading-relaxed bg-white animate-fadein">
+              {faq.answer}
             </div>
-          </div>
-        </section>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
         {/* Additional Resources */}
         <section className="py-20 border-t border-gray-100 bg-gray-50">

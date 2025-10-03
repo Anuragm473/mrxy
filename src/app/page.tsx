@@ -116,44 +116,43 @@ const jsonLd = {
 };
 
 const categories = [
-  { 
-    name: "Baseball", 
+  {
+    name: "Baseball",
     img: "/categories/baseball.jpg",
     alt: "Premium baseball caps collection",
     description: "Classic baseball caps for everyday style"
   },
-  { 
-    name: "Snapback", 
+  {
+    name: "Snapback",
     img: "/categories/snapback.jpg",
     alt: "Trendy snapback caps collection",
     description: "Adjustable snapback caps with street style"
   },
-  { 
-    name: "Trucker", 
+  {
+    name: "Trucker",
     img: "/categories/trucker.jpg",
     alt: "Comfortable trucker caps collection",
     description: "Mesh-back trucker caps for comfort"
   },
-  { 
-    name: "Fitted Cap", 
+  {
+    name: "Fitted Cap",
     img: "/categories/fitted.jpg",
     alt: "Premium fitted caps collection",
     description: "Perfect fit caps in various sizes"
   },
-  { 
-    name: "Exclusive Collection", 
+  {
+    name: "Exclusive Collection",
     img: "/categories/exclusive.jpg",
     alt: "Exclusive designer caps collection",
     description: "Limited edition designer headwear"
   },
-  { 
-    name: "Alpha Gen Kids", 
+  {
+    name: "Alpha Gen Kids",
     img: "/categories/exclusive.jpg",
     alt: "Trendy caps for Alpha Gen kids",
     description: "Cool and stylish caps designed for the young Alpha Gen kids"
   },
 ];
-
 
 const features = [
   {
@@ -183,7 +182,7 @@ async function getFeaturedProducts() {
       .sort({ createdAt: -1 })
       .limit(8)
       .lean();
-    
+
     return products.map((p) => ({
       ...p,
       _id: p._id.toString(),
@@ -206,29 +205,17 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      
+
       <div className="min-h-screen">
         {/* Hero Section - Fully Responsive */}
         <section className="relative h-[100dvh] min-h-[500px] max-h-[800px] sm:max-h-[700px] md:max-h-[600px] lg:max-h-[800px] flex items-center justify-center overflow-hidden">
           {/* Background Image with Advanced Optimization */}
           <div className="absolute inset-0 z-0">
             <picture>
-              <source 
-                media="(max-width: 480px)" 
-                srcSet="/hero-mobile.png" 
-              />
-              <source 
-                media="(max-width: 768px)" 
-                srcSet="/hero-desktop.png" 
-              />
-              <source 
-                media="(max-width: 1024px)" 
-                srcSet="/hero-desktop.png" 
-              />
-              <source 
-                media="(max-width: 1440px)" 
-                srcSet="/hero-desktop.png" 
-              />
+              <source media="(max-width: 480px)" srcSet="/hero-mobile.png" />
+              <source media="(max-width: 768px)" srcSet="/hero-desktop.png" />
+              <source media="(max-width: 1024px)" srcSet="/hero-desktop.png" />
+              <source media="(max-width: 1440px)" srcSet="/hero-desktop.png" />
               <img
                 src="/hero-desktop.png"
                 alt="Mr.Xy Premium Headwear Collection - Baseball Caps and Snapbacks"
@@ -245,18 +232,16 @@ export default async function HomePage() {
             {/* Main Heading - Responsive Typography */}
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 md:mb-8 leading-[1.1] xs:leading-tight tracking-tight">
               Premium{" "}
-              <span className="text-yellow-400 drop-shadow-lg">
-                Headwear
-              </span>
+              <span className="text-yellow-400 drop-shadow-lg">Headwear</span>
               <br className="hidden xs:block" />
               <span className="block xs:inline"> Collection</span>
             </h1>
-            
+
             {/* Subtitle - Responsive Text */}
             <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-6 sm:mb-8 md:mb-10 max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-4xl mx-auto opacity-90 leading-relaxed font-light px-2">
               Discover exclusive baseball caps, snapbacks, and designer headwear crafted for style and comfort
             </p>
-            
+
             {/* CTA Buttons - Mobile First Design */}
             <div className="flex flex-col xs:flex-row gap-3 xs:gap-4 sm:gap-5 justify-center items-center mb-8 sm:mb-12">
               <Link
@@ -269,7 +254,7 @@ export default async function HomePage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               </Link>
-              
+
               <Link
                 href="/about"
                 className="w-full xs:w-auto inline-flex items-center justify-center px-6 xs:px-7 sm:px-8 lg:px-10 py-3 xs:py-3.5 sm:py-4 lg:py-5 border-2 border-white text-white hover:bg-white hover:text-black font-semibold text-sm xs:text-base sm:text-lg rounded-full transition-all duration-300 backdrop-blur-sm min-w-[200px] xs:min-w-0"
@@ -297,9 +282,10 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Tagline Slideshow Section */}
         <section className="py-6 xs:py-8 sm:py-10 bg-gray-900">
           <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
-            <TaglineSlideshow/>
+            <TaglineSlideshow />
           </div>
         </section>
 
@@ -457,7 +443,7 @@ export default async function HomePage() {
         </div>
 
         {/* Product Cards Component */}
-        <ProductCards/>
+        <ProductCards />
 
         {/* Features Section - Responsive Grid */}
         <section className="py-12 xs:py-16 sm:py-20 lg:py-24 bg-gray-900 text-white">
@@ -499,7 +485,7 @@ export default async function HomePage() {
           </div>
         </section>
 
-        {/* FAQ Section - Mobile Optimized */}
+        {/* FAQ Section */}
         <section className="py-12 xs:py-16 sm:py-20 lg:py-24">
           <div className="max-w-4xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
             {/* Section Header */}
@@ -517,33 +503,48 @@ export default async function HomePage() {
               {[
                 {
                   question: "Do you offer free shipping?",
-                  answer: "Yes! We offer free shipping on all orders over ₹999. Orders below this amount have a flat shipping rate of ₹99."
+                  answer: "Yes! We offer free shipping on all orders over ₹999. Orders below this amount have a flat shipping rate of ₹99.",
                 },
                 {
                   question: "What's your return policy?",
-                  answer: "We accept returns within 7 days of delivery. Items must be unworn, with original tags, and in original packaging."
+                  answer: "We accept returns within 7 days of delivery. Items must be unworn, with original tags, and in original packaging.",
                 },
                 {
                   question: "How can I track my order?",
-                  answer: "Once your order ships, you'll receive a tracking number via email and SMS. You can also track your order on our 'Track Order' page."
+                  answer: "Once your order ships, you'll receive a tracking number via email and SMS. You can also track your order on our 'Track Order' page.",
                 },
                 {
                   question: "Do you ship internationally?",
-                  answer: "Currently, we ship within India only. We're working on expanding international shipping soon!"
+                  answer: "Currently, we ship within India only. We're working on expanding international shipping soon!",
                 },
                 {
                   question: "Are your caps adjustable?",
-                  answer: "Most of our caps are adjustable (snapbacks, trucker caps). Fitted caps come in specific sizes. Check individual product descriptions for details."
-                }
+                  answer: "Most of our caps are adjustable (snapbacks, trucker caps). Fitted caps come in specific sizes. Check individual product descriptions for details.",
+                },
               ].map((faq, index) => (
-                <div key={index} className="bg-white rounded-lg xs:rounded-xl sm:rounded-2xl p-4 xs:p-5 sm:p-6 lg:p-8 shadow-md hover:shadow-lg transition-shadow duration-300">
-                  <h3 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-900 mb-2 xs:mb-3 leading-tight">
-                    {faq.question}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-sm xs:text-base sm:text-lg">
-                    {faq.answer}
-                  </p>
-                </div>
+                <details
+                  key={index}
+                  className="group bg-white rounded-lg xs:rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition-all duration-300"
+                >
+                  <summary className="flex justify-between items-center cursor-pointer list-none p-4 xs:p-5 sm:p-6 lg:p-8">
+                    <h3 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-900 leading-tight pr-4">
+                      {faq.question}
+                    </h3>
+                    <svg
+                      className="w-5 h-5 xs:w-6 xs:h-6 text-gray-600 transition-transform duration-300 group-open:rotate-180 flex-shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </summary>
+                  <div className="px-4 xs:px-5 sm:px-6 lg:px-8 pb-4 xs:pb-5 sm:pb-6 lg:pb-8 pt-0">
+                    <p className="text-gray-600 leading-relaxed text-sm xs:text-base sm:text-lg border-t border-gray-100 pt-4">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </details>
               ))}
             </div>
 
