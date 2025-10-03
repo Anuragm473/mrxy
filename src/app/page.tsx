@@ -490,10 +490,10 @@ export default async function HomePage() {
           <div className="max-w-4xl mx-auto px-3 xs:px-4 sm:px-6 lg:px-8">
             {/* Section Header */}
             <div className="text-center mb-8 xs:mb-12 sm:mb-16">
-              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-3 xs:mb-4 tracking-tight">
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-3 xs:mb-4 tracking-tight">
                 Frequently Asked Questions
               </h2>
-              <p className="text-base xs:text-lg sm:text-xl lg:text-2xl text-gray-600 leading-relaxed">
+              <p className="text-base xs:text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-400 leading-relaxed">
                 Everything you need to know about shopping with Mr.Xy
               </p>
             </div>
@@ -524,14 +524,14 @@ export default async function HomePage() {
               ].map((faq, index) => (
                 <details
                   key={index}
-                  className="group bg-white rounded-lg xs:rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg transition-all duration-300"
+                  className="group bg-white dark:bg-gray-800 rounded-lg xs:rounded-xl sm:rounded-2xl shadow-md hover:shadow-lg dark:shadow-gray-900/50 dark:hover:shadow-gray-900/70 transition-all duration-300"
                 >
-                  <summary className="flex justify-between items-center cursor-pointer list-none p-4 xs:p-5 sm:p-6 lg:p-8">
-                    <h3 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-900 leading-tight pr-4">
+                  <summary className="flex justify-between items-center cursor-pointer list-none p-4 xs:p-5 sm:p-6 lg:p-8 hover:bg-gray-50 dark:hover:bg-gray-700/50 rounded-lg xs:rounded-xl sm:rounded-2xl transition-colors duration-200">
+                    <h3 className="text-base xs:text-lg sm:text-xl font-semibold text-gray-900 dark:text-white leading-tight pr-4">
                       {faq.question}
                     </h3>
                     <svg
-                      className="w-5 h-5 xs:w-6 xs:h-6 text-gray-600 transition-transform duration-300 group-open:rotate-180 flex-shrink-0"
+                      className="w-5 h-5 xs:w-6 xs:h-6 text-gray-600 dark:text-gray-400 transition-transform duration-300 group-open:rotate-180 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -540,7 +540,7 @@ export default async function HomePage() {
                     </svg>
                   </summary>
                   <div className="px-4 xs:px-5 sm:px-6 lg:px-8 pb-4 xs:pb-5 sm:pb-6 lg:pb-8 pt-0">
-                    <p className="text-gray-600 leading-relaxed text-sm xs:text-base sm:text-lg border-t border-gray-100 pt-4">
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-sm xs:text-base sm:text-lg border-t border-gray-100 dark:border-gray-700 pt-4">
                       {faq.answer}
                     </p>
                   </div>
