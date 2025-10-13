@@ -36,7 +36,13 @@ export default function LoginForm() {
 
       setCart(data.cart); // sync with backend cart
       alert("Login successful!");
+      const isAdmin=data.user.role==="admin";
+      if(isAdmin){
+        router.push("/admin");
+
+      }else{
       router.push("/");
+      }
     } catch (err: any) {
       setError(err.message);
     } finally {

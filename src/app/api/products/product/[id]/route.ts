@@ -2,18 +2,59 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Product from "@/models/Product";
 
-
-
-export async function GET(req: any, { params }: any) {
+// ✅ GET: Fetch a product by ID
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
     await dbConnect();
     const product = await Product.findById(params.id);
-    console.log(product)
+
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
     }
-    return NextResponse.json(product);
+
+    return NextResponse.json(product, { status: 200 });
   } catch (error) {
+    console.error("GET Error:", error);
     return NextResponse.json({ error: "Something went wrong" }, { status: 500 });
+  }
+}
+
+// ✅ PATCH: Update product by ID
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+  try {
+    await dbConnect();
+    const data = await req.json();
+
+    const updatedProduct = await Product.findByIdAndUpdate(params.id, data, {
+      new: true, // returns updated document
+      runValidators: true, // validate before updating
+    });
+
+    if (!updatedProduct) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedProduct, { status: 200 });
+  } catch (error) {
+    console.error("PATCH Error:", error);
+    return NextResponse.json({ error: "Failed to update product" }, { status: 500 });
+  }
+}
+
+// ✅ DELETE: Remove product by ID
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+  try {
+    await dbConnect();
+
+    const deletedProduct = await Product.findByIdAndDelete(params.id);
+
+    if (!deletedProduct) {
+      return NextResponse.json({ error: "Product not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: "Product deleted successfully" }, { status: 200 });
+  } catch (error) {
+    console.error("DELETE Error:", error);
+    return NextResponse.json({ error: "Failed to delete product" }, { status: 500 });
   }
 }

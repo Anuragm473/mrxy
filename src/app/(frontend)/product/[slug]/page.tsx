@@ -44,7 +44,7 @@ const categories = [
     name: "Alpha Gen Kids", 
     img: "/categories/exclusive.jpg",
     alt: "Trendy caps for Alpha Gen kids",
-    description: "Cool and stylish caps designed for the young Alpha Gen kids"
+     description: "Cool and stylish caps designed for the young Alpha Gen kids"
   }
 ];
 

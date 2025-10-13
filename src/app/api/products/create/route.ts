@@ -34,7 +34,7 @@ export async function POST(req: Request) {
     let uploadedUrls: string[] = [];
     if (images && images.length > 0) {
       for (const img of images) {
-        // const uploaded = await uploadImage(img);
+        const uploaded = await uploadImage(img);
         uploadedUrls.push(img);
       }
     }
