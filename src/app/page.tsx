@@ -5,10 +5,13 @@ import dbConnect from "@/lib/db";
 import { Metadata } from "next";
 import ProductCards from "@/components/ProductCards";
 import TaglineSlideshow from "@/components/TageLine";
+import ImageCarousel from "@/components/ImageCarousel";
 
 export const metadata: Metadata = {
-  title: "Mr.Xy - Premium Headwear Collection | Baseball Caps, Snapbacks & More",
-  description: "Discover Mr.Xy's exclusive collection of premium headwear. Shop baseball caps, snapbacks, trucker hats,alpha gen kids, fitted caps & exclusive designs. Free shipping on orders over ₹999.",
+  title:
+    "Mr.Xy - Premium Headwear Collection | Baseball Caps, Snapbacks & More",
+  description:
+    "Discover Mr.Xy's exclusive collection of premium headwear. Shop baseball caps, snapbacks, trucker hats,alpha gen kids, fitted caps & exclusive designs. Free shipping on orders over ₹999.",
   keywords: [
     "premium caps",
     "baseball caps online",
@@ -20,7 +23,7 @@ export const metadata: Metadata = {
     "Mr.Xy caps",
     "buy caps online India",
     "designer caps",
-    "headwear collection"
+    "headwear collection",
   ],
   authors: [{ name: "Mr.Xy" }],
   creator: "Mr.Xy",
@@ -31,9 +34,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   openGraph: {
@@ -42,7 +45,8 @@ export const metadata: Metadata = {
     url: "https://mrxy.com",
     siteName: "Mr.Xy",
     title: "Mr.Xy - Premium Headwear Collection | Baseball Caps & Snapbacks",
-    description: "Shop premium headwear at Mr.Xy. Exclusive baseball caps, snapbacks, and designer headwear with free shipping on orders over ₹999.",
+    description:
+      "Shop premium headwear at Mr.Xy. Exclusive baseball caps, snapbacks, and designer headwear with free shipping on orders over ₹999.",
     images: [
       {
         url: "/og-banner.jpg",
@@ -58,7 +62,8 @@ export const metadata: Metadata = {
     site: "@MrXyCaps",
     creator: "@MrXyCaps",
     title: "Mr.Xy - Premium Headwear Collection",
-    description: "Discover exclusive premium caps and headwear. Free shipping on orders over ₹999.",
+    description:
+      "Discover exclusive premium caps and headwear. Free shipping on orders over ₹999.",
     images: ["/twitter-banner.jpg"],
   },
   alternates: {
@@ -77,7 +82,8 @@ const jsonLd = {
   "@type": "Store",
   name: "Mr.Xy",
   image: "https://mrxy.com/logo.jpg",
-  description: "Premium headwear store offering baseball caps, snapbacks, trucker caps,alpha gen kids, and exclusive collections.",
+  description:
+    "Premium headwear store offering baseball caps, snapbacks, trucker caps,alpha gen kids, and exclusive collections.",
   url: "https://mrxy.com",
   telephone: "+91-XXXXXXXXXX",
   address: {
@@ -89,7 +95,7 @@ const jsonLd = {
   sameAs: [
     "https://www.instagram.com/mrxycaps",
     "https://www.facebook.com/mrxycaps",
-    "https://twitter.com/mrxycaps"
+    "https://twitter.com/mrxycaps",
   ],
   hasOfferCatalog: {
     "@type": "OfferCatalog",
@@ -100,19 +106,19 @@ const jsonLd = {
         itemOffered: {
           "@type": "Product",
           name: "Baseball Caps",
-          category: "Headwear"
-        }
+          category: "Headwear",
+        },
       },
       {
         "@type": "Offer",
         itemOffered: {
           "@type": "Product",
           name: "Snapback Caps",
-          category: "Headwear"
-        }
-      }
-    ]
-  }
+          category: "Headwear",
+        },
+      },
+    ],
+  },
 };
 
 const categories = [
@@ -120,37 +126,37 @@ const categories = [
     name: "Baseball",
     img: "/categories/baseball.jpg",
     alt: "Premium baseball caps collection",
-    description: "Classic baseball caps for everyday style"
+    description: "Classic baseball caps for everyday style",
   },
   {
     name: "Snapback",
     img: "/categories/snapback.jpg",
     alt: "Trendy snapback caps collection",
-    description: "Adjustable snapback caps with street style"
+    description: "Adjustable snapback caps with street style",
   },
   {
     name: "Trucker",
     img: "/categories/trucker.jpg",
     alt: "Comfortable trucker caps collection",
-    description: "Mesh-back trucker caps for comfort"
+    description: "Mesh-back trucker caps for comfort",
   },
   {
     name: "Fitted Cap",
     img: "/categories/fitted.jpg",
     alt: "Premium fitted caps collection",
-    description: "Perfect fit caps in various sizes"
+    description: "Perfect fit caps in various sizes",
   },
   {
     name: "Exclusive Collection",
     img: "/categories/exclusive.jpg",
     alt: "Exclusive designer caps collection",
-    description: "Limited edition designer headwear"
+    description: "Limited edition designer headwear",
   },
   {
     name: "Alpha Gen Kids",
     img: "/categories/exclusive.jpg",
     alt: "Trendy caps for Alpha Gen kids",
-    description: "Cool and stylish caps designed for the young Alpha Gen kids"
+    description: "Cool and stylish caps designed for the young Alpha Gen kids",
   },
 ];
 
@@ -159,19 +165,27 @@ const features = [
     icon: "🏆",
     title: "Premium Quality",
     description: "Crafted from finest materials for lasting comfort and style",
-    benefits: ["Durable construction", "Comfort-first design", "Quality guarantee"]
+    benefits: [
+      "Durable construction",
+      "Comfort-first design",
+      "Quality guarantee",
+    ],
   },
   {
     icon: "🎨",
     title: "Exclusive Designs",
     description: "Unique patterns and styles you won't find anywhere else",
-    benefits: ["Limited editions", "Designer collaborations", "Trend-setting styles"]
+    benefits: [
+      "Limited editions",
+      "Designer collaborations",
+      "Trend-setting styles",
+    ],
   },
   {
     icon: "🚀",
     title: "Fast Delivery",
     description: "Quick shipping across India with order tracking",
-    benefits: ["2-3 day delivery", "Order tracking", "Secure packaging"]
+    benefits: ["2-3 day delivery", "Order tracking", "Secure packaging"],
   },
 ];
 
@@ -239,7 +253,8 @@ export default async function HomePage() {
 
             {/* Subtitle - Responsive Text */}
             <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl mb-6 sm:mb-8 md:mb-10 max-w-xs xs:max-w-sm sm:max-w-2xl lg:max-w-4xl mx-auto opacity-90 leading-relaxed font-light px-2">
-              Discover exclusive baseball caps, snapbacks, and designer headwear crafted for style and comfort
+              Discover exclusive baseball caps, snapbacks, and designer headwear
+              crafted for style and comfort
             </p>
 
             {/* CTA Buttons - Mobile First Design */}
@@ -250,8 +265,18 @@ export default async function HomePage() {
                 aria-label="Shop all premium headwear products"
               >
                 <span>Shop Collection</span>
-                <svg className="ml-2 w-4 h-4 xs:w-5 xs:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                <svg
+                  className="ml-2 w-4 h-4 xs:w-5 xs:h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 8l4 4m0 0l-4 4m4-4H3"
+                  />
                 </svg>
               </Link>
 
@@ -268,7 +293,9 @@ export default async function HomePage() {
             <div className="mt-8 sm:mt-12 flex flex-col xs:flex-row flex-wrap justify-center items-center gap-4 xs:gap-6 sm:gap-8 text-xs xs:text-sm sm:text-base opacity-80">
               <div className="flex items-center gap-2">
                 <span className="text-green-400 text-sm xs:text-base">✓</span>
-                <span className="whitespace-nowrap">Free Shipping Over ₹999</span>
+                <span className="whitespace-nowrap">
+                  Free Shipping Over ₹999
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-green-400 text-sm xs:text-base">✓</span>
@@ -276,7 +303,9 @@ export default async function HomePage() {
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-green-400 text-sm xs:text-base">✓</span>
-                <span className="whitespace-nowrap">Premium Quality Guarantee</span>
+                <span className="whitespace-nowrap">
+                  Premium Quality Guarantee
+                </span>
               </div>
             </div>
           </div>
@@ -307,7 +336,9 @@ export default async function HomePage() {
               {categories.map((category, index) => (
                 <Link
                   key={category.name}
-                  href={`/products?category=${encodeURIComponent(category.name)}`}
+                  href={`/products?category=${encodeURIComponent(
+                    category.name
+                  )}`}
                   className="group flex flex-col items-center p-3 xs:p-4 sm:p-5 lg:p-6 rounded-xl xs:rounded-2xl hover:bg-white transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   aria-label={`Shop ${category.name} - ${category.description}`}
                 >
@@ -333,6 +364,11 @@ export default async function HomePage() {
           </div>
         </section>
 
+        {/* Image Carousel Section */}
+        <section className="py-12 xs:py-16 sm:py-20 lg:py-24 bg-gray-50">
+          <ImageCarousel />
+        </section>
+
         {/* Featured Products - Responsive Product Grid */}
         {featuredProducts.length > 0 && (
           <section className="py-12 xs:py-16 sm:py-20 lg:py-24">
@@ -354,7 +390,9 @@ export default async function HomePage() {
                     key={product._id}
                     href={`/product/${product.slug}`}
                     className="group bg-white rounded-lg xs:rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-                    aria-label={`View ${product.name} - ₹${product.discountedPrice || product.price}`}
+                    aria-label={`View ${product.name} - ₹${
+                      product.discountedPrice || product.price
+                    }`}
                   >
                     <div className="aspect-square overflow-hidden">
                       <img
@@ -393,8 +431,18 @@ export default async function HomePage() {
                   aria-label="View all products in our collection"
                 >
                   View All Products
-                  <svg className="ml-2 w-4 h-4 xs:w-5 xs:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  <svg
+                    className="ml-2 w-4 h-4 xs:w-5 xs:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
                   </svg>
                 </Link>
               </div>
@@ -413,7 +461,8 @@ export default async function HomePage() {
               New Releases
             </h2>
             <p className="text-gray-300 mb-4 xs:mb-5 sm:mb-6 text-sm xs:text-base sm:text-lg lg:text-xl xl:text-2xl font-medium leading-relaxed">
-              Versatile Caps for every vibe, whether you are hitting the streets or just chilling at home
+              Versatile Caps for every vibe, whether you are hitting the streets
+              or just chilling at home
             </p>
             <Link
               href="/products"
@@ -473,8 +522,13 @@ export default async function HomePage() {
                   </p>
                   <ul className="space-y-2 xs:space-y-3">
                     {feature.benefits.map((benefit, idx) => (
-                      <li key={idx} className="flex items-center justify-center gap-2 text-gray-300 text-sm xs:text-base">
-                        <span className="text-yellow-400 text-base xs:text-lg">✓</span>
+                      <li
+                        key={idx}
+                        className="flex items-center justify-center gap-2 text-gray-300 text-sm xs:text-base"
+                      >
+                        <span className="text-yellow-400 text-base xs:text-lg">
+                          ✓
+                        </span>
                         <span>{benefit}</span>
                       </li>
                     ))}
@@ -503,23 +557,28 @@ export default async function HomePage() {
               {[
                 {
                   question: "Do you offer free shipping?",
-                  answer: "Yes! We offer free shipping on all orders over ₹999. Orders below this amount have a flat shipping rate of ₹99.",
+                  answer:
+                    "Yes! We offer free shipping on all orders over ₹999. Orders below this amount have a flat shipping rate of ₹99.",
                 },
                 {
                   question: "What's your return policy?",
-                  answer: "We accept returns within 7 days of delivery. Items must be unworn, with original tags, and in original packaging.",
+                  answer:
+                    "We accept returns within 7 days of delivery. Items must be unworn, with original tags, and in original packaging.",
                 },
                 {
                   question: "How can I track my order?",
-                  answer: "Once your order ships, you'll receive a tracking number via email and SMS. You can also track your order on our 'Track Order' page.",
+                  answer:
+                    "Once your order ships, you'll receive a tracking number via email and SMS. You can also track your order on our 'Track Order' page.",
                 },
                 {
                   question: "Do you ship internationally?",
-                  answer: "Currently, we ship within India only. We're working on expanding international shipping soon!",
+                  answer:
+                    "Currently, we ship within India only. We're working on expanding international shipping soon!",
                 },
                 {
                   question: "Are your caps adjustable?",
-                  answer: "Most of our caps are adjustable (snapbacks, trucker caps). Fitted caps come in specific sizes. Check individual product descriptions for details.",
+                  answer:
+                    "Most of our caps are adjustable (snapbacks, trucker caps). Fitted caps come in specific sizes. Check individual product descriptions for details.",
                 },
               ].map((faq, index) => (
                 <details
@@ -536,7 +595,12 @@ export default async function HomePage() {
                       stroke="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 9l-7 7-7-7"
+                      />
                     </svg>
                   </summary>
                   <div className="px-4 xs:px-5 sm:px-6 lg:px-8 pb-4 xs:pb-5 sm:pb-6 lg:pb-8 pt-0">

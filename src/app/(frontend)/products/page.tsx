@@ -190,13 +190,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                       className="group block"
                     >
                       <div className="bg-white rounded-2xl border-2 border-gray-200 group-hover:border-yellow-400 transition-all duration-300 group-hover:shadow-2xl overflow-hidden transform group-hover:-translate-y-1">
-                        <div className="aspect-square overflow-hidden relative flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #f5f5f5 0%, #ffffff 50%, #f5f5f5 100%)' }}>
+                        <div className="aspect-square overflow-hidden relative flex items-center justify-center" >
                           {product.images && product.images.length > 0 && product.images[0] ? (
-                            <div className="relative w-full h-full flex items-center justify-center p-6">
+                            <div className="relative w-full h-full flex items-center justify-center">
                               <img
                                 src={product.images[0]}
                                 alt={product.name}
-                                className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
+                                className="max-w-full max-h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                 loading="lazy"
                               />
                             </div>
@@ -235,7 +235,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                             </div>
                           )}
                           
-                          <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+                          <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
                             <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
                               <div className="bg-yellow-400 px-6 py-3 text-sm font-bold text-black tracking-wider uppercase shadow-xl rounded-lg">
                                 View Details →
