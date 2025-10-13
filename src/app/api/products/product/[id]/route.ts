@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import Product from "@/models/Product";
 
 // ✅ GET: Fetch a product by ID
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, { params }: any) {
   try {
     await dbConnect();
     const product = await Product.findById(params.id);
@@ -20,7 +20,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 // ✅ PATCH: Update product by ID
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, { params }:any) {
   try {
     await dbConnect();
     const data = await req.json();
@@ -42,7 +42,7 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 }
 
 // ✅ DELETE: Remove product by ID
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }:any) {
   try {
     await dbConnect();
 
