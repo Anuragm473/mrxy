@@ -45,8 +45,9 @@ export async function PATCH(req: Request, { params }:any) {
 export async function DELETE(req: Request, { params }:any) {
   try {
     await dbConnect();
-
-    const deletedProduct = await Product.findByIdAndDelete(params.id);
+    const param=await params
+    console.log(param.id)
+    const deletedProduct = await Product.findByIdAndDelete(param.id);
 
     if (!deletedProduct) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
@@ -55,6 +56,6 @@ export async function DELETE(req: Request, { params }:any) {
     return NextResponse.json({ message: "Product deleted successfully" }, { status: 200 });
   } catch (error) {
     console.error("DELETE Error:", error);
-    return NextResponse.json({ error: "Failed to delete product" }, { status: 500 });
+    return NextResponse.json({ error: "Product deleted successfully" }, { status: 500 });
   }
 }

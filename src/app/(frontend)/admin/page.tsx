@@ -91,7 +91,7 @@ export default function AdminDashboard() {
   // Get auth token
   const getAuthToken = () => {
     const token = window.localStorage.getItem("token");
-    return token ? JSON.parse(token) : null;
+    return token ? token : null;
   };
 
   useEffect(() => {
@@ -340,17 +340,16 @@ export default function AdminDashboard() {
         return;
       }
 
-      const res = await fetch(`/api/products/${id}`, {
+      const res = await fetch(`/api/products/product/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error || "Failed to delete");
-      }
+      
 
       alert("Product deleted successfully!");
       fetchDashboardData();
@@ -442,15 +441,6 @@ export default function AdminDashboard() {
           <h1 className="text-2xl font-bold tracking-tight">ADMIN PANEL</h1>
           <div className="flex items-center gap-4">
             <span className="text-sm">{user?.name}</span>
-            <button
-              onClick={() => {
-                window.localStorage.clear();
-                router.push("/login");
-              }}
-              className="px-4 py-2 bg-black text-white text-sm hover:bg-gray-800 transition-colors"
-            >
-              Logout
-            </button>
           </div>
         </div>
       </header>
