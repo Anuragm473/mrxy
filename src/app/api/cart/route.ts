@@ -23,7 +23,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(user.cart);
   } catch (err) {
-    console.error(err);
+    console.log("GET /api/cart error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
@@ -77,7 +77,34 @@ export async function PUT(req: Request) {
 
     return NextResponse.json(user.cart);
   } catch (err) {
-    console.error(err);
+    console.error("PUT /api/cart error:", err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}
+
+// ✅ DELETE all cart items (clear cart)
+export async function DELETE(req: Request) {
+  await dbConnect();
+  try {
+    const authHeader = req.headers.get("authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const token = authHeader.split(" ")[1];
+    const decoded: any = verifyToken(token);
+
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    user.cart = [];
+    await user.save();
+
+    return NextResponse.json({ message: "Cart cleared", cart: [] });
+  } catch (err) {
+    console.error("DELETE /api/cart error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

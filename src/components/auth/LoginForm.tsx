@@ -29,7 +29,7 @@ export default function LoginForm() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Login failed");
 
-      localStorage.setItem("token", JSON.stringify(data.token));
+      localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user));
       refreshAuthStatus();
       localStorage.removeItem("cart"); // clear guest cart

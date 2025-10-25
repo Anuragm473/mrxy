@@ -74,7 +74,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       if (isLoggedIn) {
         const token = localStorage.getItem("token");
         const res = await axios.post(
-          "/api/cart",
+          "/api/cart/add",
           { productId: product.productId, quantity: product.quantity || 1 },
           { headers: { Authorization: `Bearer ${token}` } }
         );
