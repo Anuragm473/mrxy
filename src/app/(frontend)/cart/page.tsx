@@ -345,7 +345,7 @@ export default function CartPage() {
             <div className="pt-2 sm:pt-4">
               <button
                 onClick={clearCart}
-                className="text-gray-500 hover:text-black transition-colors text-xs sm:text-sm font-medium"
+                className="text-red-500 hover:text-red-700 transition-colors text-sm sm:text-base font-medium"
               >
                 Clear entire cart
               </button>
@@ -359,8 +359,8 @@ export default function CartPage() {
 
               <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                 <div className="flex justify-between text-sm sm:text-base">
-                  <span className="text-gray-700">Subtotal</span>
-                  <span className="font-semibold">₹{subtotal.toLocaleString()}</span>
+                  <span className="text-gray-700 font-medium">Subtotal</span>
+                  <span className="font-semibold text-gray-900">₹{subtotal.toLocaleString()}</span>
                 </div>
 
                 {savings > 0 && (
@@ -371,8 +371,8 @@ export default function CartPage() {
                 )}
 
                 <div className="flex justify-between text-sm sm:text-base">
-                  <span className="text-gray-700">Shipping</span>
-                  <span className="font-semibold">
+                  <span className="text-gray-700 font-medium">Shipping</span>
+                  <span className="font-semibold text-gray-900">
                     {shipping === 0 ? 'FREE' : `₹${shipping}`}
                   </span>
                 </div>
