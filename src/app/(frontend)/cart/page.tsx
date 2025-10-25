@@ -179,7 +179,7 @@ export default function CartPage() {
               // Handle case where product data failed to load
               if (!item.product) {
                 return (
-                  <div key={item._id} className="border-b border-gray-200 pb-4 sm:pb-6">
+                  <div key={item.productId} className="border-b border-gray-200 pb-4 sm:pb-6">
                     <div className="flex gap-3 sm:gap-6">
                       <div className="w-20 h-20 sm:w-32 sm:h-32 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
                         <span className="text-gray-500 text-xs sm:text-sm">No Image</span>
@@ -204,7 +204,7 @@ export default function CartPage() {
               const hasDiscount = item.product.discountedPrice && item.product.discountedPrice < item.product.price;
 
               return (
-                <div key={item._id} className="border-b border-gray-200 pb-4 sm:pb-6">
+                <div key={item.productId} className="border-b border-gray-200 pb-4 sm:pb-6">
                   <div className="flex gap-3 sm:gap-6">
                     {/* Product Image */}
                     <div className="w-20 h-20 sm:w-32 sm:h-32 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
