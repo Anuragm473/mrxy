@@ -42,12 +42,14 @@ export async function PATCH(req: Request, { params }:any) {
 }
 
 // ✅ DELETE: Remove product by ID
-export async function DELETE(req: Request, { params }:any) {
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   try {
     await dbConnect();
-    const param=await params
-    console.log(param.id)
-    const deletedProduct = await Product.findByIdAndDelete(param.id);
+
+    const { id } = params;
+    console.log("Deleting product with ID:", id);
+
+    const deletedProduct = await Product.findByIdAndDelete(id);
 
     if (!deletedProduct) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });
@@ -56,6 +58,6 @@ export async function DELETE(req: Request, { params }:any) {
     return NextResponse.json({ message: "Product deleted successfully" }, { status: 200 });
   } catch (error) {
     console.error("DELETE Error:", error);
-    return NextResponse.json({ error: "Product deleted successfully" }, { status: 500 });
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

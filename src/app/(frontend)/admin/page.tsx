@@ -300,7 +300,7 @@ export default function AdminDashboard() {
           .filter(Boolean),
       };
 
-      const res = await fetch(`/api/products/${editingProduct._id}`, {
+      const res = await fetch(`/api/products/product/${editingProduct._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -347,8 +347,7 @@ export default function AdminDashboard() {
         },
       });
 
-        const data = await res.json();
-        throw new Error(data.error || "Failed to delete");
+        
       
 
       alert("Product deleted successfully!");
