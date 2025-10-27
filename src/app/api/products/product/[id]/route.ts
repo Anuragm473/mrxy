@@ -42,7 +42,7 @@ export async function PATCH(req: Request, { params }:any) {
 }
 
 // ✅ DELETE: Remove product by ID
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, { params }: { params: any }) {
   try {
     await dbConnect();
 
