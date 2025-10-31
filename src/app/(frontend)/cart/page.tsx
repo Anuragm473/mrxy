@@ -2,10 +2,11 @@
 import { useCart } from "@/context/CartContext";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function CartPage() {
   const { cart, updateQuantity, removeFromCart, clearCart } = useCart();
-  const [isProcessing, setIsProcessing] = useState(false);
+  const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [cartWithProducts, setCartWithProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -32,17 +33,13 @@ export default function CartPage() {
       setError(null);
 
       try {
-        // Create an array of promises to fetch product data
         const productPromises = cart.map(async (cartItem: any) => {
           try {
-            console.log(cartItem)
             const response = await fetch(`/api/products/product/${cartItem.productId}`);
             if (!response.ok) {
               throw new Error(`Failed to fetch product ${cartItem.productId}`);
             }
             const productData = await response.json();
-
-            // Combine cart item with product data
             return {
               ...cartItem,
               product: productData
@@ -82,18 +79,11 @@ export default function CartPage() {
     return sum + (item.product.price - item.product.discountedPrice) * item.quantity;
   }, 0);
 
-  const handlePlaceOrder = async () => {
-    setIsProcessing(true);
-    try {
-      // Add your order processing logic here
-      console.log("Processing order...");
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      // Redirect to success page or show success message
-    } catch (error) {
-      console.error("Order failed:", error);
-    } finally {
-      setIsProcessing(false);
+  const handleProceedToCheckout = () => {
+    if (!isAuthenticated) {
+      router.push('/login?redirect=/checkout');
+    } else {
+      router.push('/checkout');
     }
   };
 
@@ -176,7 +166,6 @@ export default function CartPage() {
           {/* Cart Items */}
           <div className="xl:col-span-2 space-y-4 sm:space-y-6">
             {cartWithProducts.map((item: any) => {
-              // Handle case where product data failed to load
               if (!item.product) {
                 return (
                   <div key={item.productId} className="border-b border-gray-200 pb-4 sm:pb-6">
@@ -206,7 +195,6 @@ export default function CartPage() {
               return (
                 <div key={item.productId} className="border-b border-gray-200 pb-4 sm:pb-6">
                   <div className="flex gap-3 sm:gap-6">
-                    {/* Product Image */}
                     <div className="w-20 h-20 sm:w-32 sm:h-32 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
                       <img
                         src={item.product.images?.[0] || '/placeholder-image.jpg'}
@@ -215,7 +203,6 @@ export default function CartPage() {
                       />
                     </div>
 
-                    {/* Product Details */}
                     <div className="flex-1 min-w-0">
                       <h3 className="text-base sm:text-xl font-semibold text-black mb-1 sm:mb-2 line-clamp-2 sm:truncate">
                         {item.product.name || 'Unknown Product'}
@@ -227,7 +214,6 @@ export default function CartPage() {
                         </p>
                       )}
 
-                      {/* Price */}
                       <div className="flex flex-wrap items-center gap-1 sm:gap-2 mb-3 sm:mb-4">
                         <span className="text-base sm:text-lg font-bold text-black">₹{itemPrice?.toLocaleString()}</span>
                         {hasDiscount && (
@@ -240,7 +226,6 @@ export default function CartPage() {
                         )}
                       </div>
 
-                      {/* Mobile Layout: Stack quantity and remove */}
                       <div className="sm:hidden space-y-3">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2">
@@ -286,9 +271,7 @@ export default function CartPage() {
                         </button>
                       </div>
 
-                      {/* Desktop Layout: Side by side quantity and remove */}
                       <div className="hidden sm:flex items-center justify-between bg-gray-50 p-3 rounded-lg shadow-sm">
-                        {/* Quantity Section */}
                         <div className="flex items-center space-x-3">
                           <label className="text-sm font-medium text-gray-700">Qty:</label>
                           <div className="flex items-center border border-gray-300 rounded-full overflow-hidden">
@@ -320,7 +303,6 @@ export default function CartPage() {
                           </div>
                         </div>
 
-                        {/* Remove Button */}
                         <button
                           onClick={() => removeFromCart(item.productId)}
                           className="text-sm font-semibold text-gray-600 hover:text-red-500 transition-colors duration-200"
@@ -329,7 +311,6 @@ export default function CartPage() {
                         </button>
                       </div>
 
-                      {/* Item Total - Desktop only */}
                       <div className="mt-3 text-right hidden sm:block">
                         <span className="text-lg font-semibold text-black">
                           ₹{(itemPrice * item.quantity).toLocaleString()}
@@ -341,7 +322,6 @@ export default function CartPage() {
               );
             })}
 
-            {/* Clear Cart */}
             <div className="pt-2 sm:pt-4">
               <button
                 onClick={clearCart}
@@ -393,42 +373,17 @@ export default function CartPage() {
 
               {/* Checkout Actions */}
               <div className="space-y-3 sm:space-y-4">
-                {isAuthenticated ? (
-                  <button
-                    onClick={handlePlaceOrder}
-                    disabled={isProcessing}
-                    className="w-full bg-black text-white py-2.5 sm:py-3 px-4 sm:px-6 font-medium hover:bg-gray-800 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
-                  >
-                    {isProcessing ? (
-                      <span className="flex items-center justify-center">
-                        <svg className="animate-spin -ml-1 mr-2 h-3 w-3 sm:h-4 sm:w-4 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                        Processing...
-                      </span>
-                    ) : (
-                      'Place Order'
-                    )}
-                  </button>
-                ) : (
-                  <div className="space-y-2 sm:space-y-3">
-                    <p className="text-xs sm:text-sm text-gray-600 text-center px-2">
-                      Please sign in to continue with checkout
-                    </p>
-                    <Link
-                      href="/login"
-                      className="block w-full bg-black text-white py-2.5 sm:py-3 px-4 sm:px-6 font-medium text-center hover:bg-gray-800 transition-colors duration-200 text-sm sm:text-base"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      href="/signup"
-                      className="block w-full border border-black text-black py-2.5 sm:py-3 px-4 sm:px-6 font-medium text-center hover:bg-black hover:text-white transition-colors duration-200 text-sm sm:text-base"
-                    >
-                      Create Account
-                    </Link>
-                  </div>
+                <button
+                  onClick={handleProceedToCheckout}
+                  className="w-full bg-black text-white py-2.5 sm:py-3 px-4 sm:px-6 font-medium hover:bg-gray-800 transition-colors duration-200 text-sm sm:text-base"
+                >
+                  Proceed to Checkout
+                </button>
+
+                {!isAuthenticated && (
+                  <p className="text-xs sm:text-sm text-gray-600 text-center">
+                    You'll be asked to sign in before checkout
+                  </p>
                 )}
 
                 <Link
@@ -439,7 +394,6 @@ export default function CartPage() {
                 </Link>
               </div>
 
-              {/* Security Badge */}
               <div className="mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-gray-300">
                 <div className="flex items-center justify-center space-x-2 text-xs sm:text-sm text-gray-600">
                   <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

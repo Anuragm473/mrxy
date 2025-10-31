@@ -34,6 +34,6 @@ export async function POST(req: Request) {
     await user.save();
     return NextResponse.json(user.cart);
   } catch (err) {
-    return NextResponse.json({ error: "Server error" }, { status: 500 });
+    return NextResponse.json({ error: "Server error",message:err }, { status: 500 });
   }
 }
