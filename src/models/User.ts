@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { unique } from "next/dist/build/utils";
 
 export interface IAddress {
   apartment: string;
@@ -18,6 +19,7 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   email: string;
+  phone:string;
   password: string;
   addresses: IAddress[];
   role: "user" | "admin";
@@ -42,6 +44,7 @@ const UserSchema = new Schema<IUser>(
   {
     firstName: { type: String, required: true },
     lastName: { type: String },
+    phone:{type:String,unique:true},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     addresses: [AddressSchema],

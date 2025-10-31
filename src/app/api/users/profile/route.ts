@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { verifyToken } from "@/lib/auth";
+import Order from "@/models/Order";
+import Product from "@/models/Product";
 
 export async function GET(req: Request) {
   try {
@@ -19,7 +21,16 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json(user);
+    const userOrders=(await Order.find({user:decoded.id})).toSorted((a,b)=>b.createdAt.getTime()-a.createdAt.getTime());
+    user.orders=userOrders;
+
+    const suggestedProducts = await Product.find()
+  .sort({ createdAt: 1 }) // ascending; use -1 for descending
+  .limit(5);
+
+  user.suggestedProducts=suggestedProducts;
+
+    return NextResponse.json({user});
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
