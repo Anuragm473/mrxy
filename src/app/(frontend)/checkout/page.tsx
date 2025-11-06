@@ -39,7 +39,6 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState<Partial<ShippingAddress>>({});
   const [user, setUser] = useState<any>(null);
 
-  // Check authentication and fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
@@ -63,7 +62,6 @@ export default function CheckoutPage() {
         const userData = await response.json();
         setUser(userData);
 
-        // Pre-fill address if available
         if (userData.address) {
           setShippingAddress({
             apartmentName: userData.address.apartmentName || "",
@@ -83,7 +81,6 @@ export default function CheckoutPage() {
     fetchUserData();
   }, [router]);
 
-  // Fetch product data for cart items
   useEffect(() => {
     const fetchProductData = async () => {
       if (!cart || cart.length === 0) {
@@ -118,7 +115,7 @@ export default function CheckoutPage() {
   }, 0);
 
   const shippingFee = subtotal >= 999 ? 0 : 99;
-  const tax = Math.round(subtotal * 0.18); // 18% GST
+  const tax = Math.round(subtotal * 0.18);
   const total = subtotal + shippingFee + tax;
 
   const validateForm = (): boolean => {
@@ -262,7 +259,6 @@ export default function CheckoutPage() {
 
       const { orderId, razorpayOrderId } = await response.json();
       
-      // Initialize Razorpay payment
       await initializeRazorpayPayment(orderId, razorpayOrderId);
     } catch (error: any) {
       console.error('Order creation error:', error);
@@ -273,10 +269,10 @@ export default function CheckoutPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading checkout...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black dark:border-white mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading checkout...</p>
         </div>
       </div>
     );
@@ -284,12 +280,12 @@ export default function CheckoutPage() {
 
   if (!cart || cart.length === 0) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
+          <h1 className="text-2xl font-bold mb-4 dark:text-white">Your cart is empty</h1>
           <button
             onClick={() => router.push('/products')}
-            className="px-6 py-3 bg-black text-white font-medium hover:bg-gray-800"
+            className="px-6 py-3 bg-black dark:bg-white text-white dark:text-black font-medium hover:bg-gray-800 dark:hover:bg-gray-200"
           >
             Continue Shopping
           </button>
@@ -306,136 +302,134 @@ export default function CheckoutPage() {
         onError={() => alert('Failed to load payment system')}
       />
       
-      <div className="min-h-screen bg-gray-50 py-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+          <h1 className="text-3xl font-bold mb-8 dark:text-white">Checkout</h1>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {/* Shipping Address Form */}
             <div className="lg:col-span-2">
-              <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
-                <h2 className="text-xl font-semibold mb-6">Shipping Address</h2>
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-6">
+                <h2 className="text-xl font-semibold mb-6 dark:text-white">Shipping Address</h2>
                 
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Apartment/House Name (Optional)
                     </label>
                     <input
                       type="text"
                       value={shippingAddress.apartmentName}
                       onChange={(e) => handleInputChange('apartmentName', e.target.value)}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-black focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="Building/Apartment name"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Street Address *
                     </label>
                     <input
                       type="text"
                       value={shippingAddress.streetName}
                       onChange={(e) => handleInputChange('streetName', e.target.value)}
-                      className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black focus:border-transparent ${
-                        errors.streetName ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                        errors.streetName ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
                       }`}
                       placeholder="Street name and number"
                     />
                     {errors.streetName && (
-                      <p className="text-red-500 text-sm mt-1">{errors.streetName}</p>
+                      <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.streetName}</p>
                     )}
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         City *
                       </label>
                       <input
                         type="text"
                         value={shippingAddress.city}
                         onChange={(e) => handleInputChange('city', e.target.value)}
-                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black focus:border-transparent ${
-                          errors.city ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                          errors.city ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
                         }`}
                         placeholder="City"
                       />
                       {errors.city && (
-                        <p className="text-red-500 text-sm mt-1">{errors.city}</p>
+                        <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.city}</p>
                       )}
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         State *
                       </label>
                       <input
                         type="text"
                         value={shippingAddress.state}
                         onChange={(e) => handleInputChange('state', e.target.value)}
-                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black focus:border-transparent ${
-                          errors.state ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                          errors.state ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
                         }`}
                         placeholder="State"
                       />
                       {errors.state && (
-                        <p className="text-red-500 text-sm mt-1">{errors.state}</p>
+                        <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.state}</p>
                       )}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Pincode *
                       </label>
                       <input
                         type="text"
                         value={shippingAddress.pincode}
                         onChange={(e) => handleInputChange('pincode', e.target.value)}
-                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black focus:border-transparent ${
-                          errors.pincode ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-black dark:focus:ring-white focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 ${
+                          errors.pincode ? 'border-red-500 dark:border-red-500' : 'border-gray-300 dark:border-gray-600'
                         }`}
                         placeholder="6-digit pincode"
                         maxLength={6}
                       />
                       {errors.pincode && (
-                        <p className="text-red-500 text-sm mt-1">{errors.pincode}</p>
+                        <p className="text-red-500 dark:text-red-400 text-sm mt-1">{errors.pincode}</p>
                       )}
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Country
                       </label>
                       <input
                         type="text"
                         value={shippingAddress.country}
                         disabled
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md bg-gray-100"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-gray-100 dark:bg-gray-600 text-gray-900 dark:text-gray-300"
                       />
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Order Items */}
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <h2 className="text-xl font-semibold mb-4">Order Items</h2>
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm">
+                <h2 className="text-xl font-semibold mb-4 dark:text-white">Order Items</h2>
                 <div className="space-y-4">
                   {cartWithProducts.map((item) => (
-                    <div key={item.productId} className="flex gap-4 pb-4 border-b last:border-b-0">
+                    <div key={item.productId} className="flex gap-4 pb-4 border-b dark:border-gray-700 last:border-b-0">
                       <img
                         src={item.product.images?.[0] || '/placeholder.jpg'}
                         alt={item.product.name}
                         className="w-20 h-20 object-cover rounded"
                       />
                       <div className="flex-1">
-                        <h3 className="font-medium">{item.product.name}</h3>
-                        <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
-                        <p className="text-sm font-semibold">
+                        <h3 className="font-medium dark:text-white">{item.product.name}</h3>
+                        <p className="text-sm text-gray-600 dark:text-gray-400">Qty: {item.quantity}</p>
+                        <p className="text-sm font-semibold dark:text-white">
                           ₹{(item.product.discountedPrice || item.product.price).toLocaleString()} × {item.quantity}
                         </p>
                       </div>
@@ -445,30 +439,29 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-white p-6 rounded-lg shadow-sm sticky top-8">
-                <h2 className="text-xl font-semibold mb-6">Order Summary</h2>
+              <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm sticky top-8">
+                <h2 className="text-xl font-semibold mb-6 dark:text-white">Order Summary</h2>
                 
                 <div className="space-y-3 mb-6">
                   <div className="flex justify-between">
-                    <span className="text-gray-700">Subtotal</span>
-                    <span className="font-semibold">₹{subtotal.toLocaleString()}</span>
+                    <span className="text-gray-700 dark:text-gray-300">Subtotal</span>
+                    <span className="font-semibold dark:text-white">₹{subtotal.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-700">Tax (GST 18%)</span>
-                    <span className="font-semibold">₹{tax.toLocaleString()}</span>
+                    <span className="text-gray-700 dark:text-gray-300">Tax (GST 18%)</span>
+                    <span className="font-semibold dark:text-white">₹{tax.toLocaleString()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-700">Shipping</span>
-                    <span className="font-semibold">
+                    <span className="text-gray-700 dark:text-gray-300">Shipping</span>
+                    <span className="font-semibold dark:text-white">
                       {shippingFee === 0 ? 'FREE' : `₹${shippingFee}`}
                     </span>
                   </div>
-                  <div className="border-t pt-3">
+                  <div className="border-t dark:border-gray-700 pt-3">
                     <div className="flex justify-between text-lg font-bold">
-                      <span>Total</span>
-                      <span>₹{total.toLocaleString()}</span>
+                      <span className="dark:text-white">Total</span>
+                      <span className="dark:text-white">₹{total.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
@@ -476,11 +469,11 @@ export default function CheckoutPage() {
                 <button
                   onClick={handlePlaceOrder}
                   disabled={isProcessing || !razorpayLoaded}
-                  className="w-full bg-black text-white py-3 px-6 font-medium hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-black dark:bg-white text-white dark:text-black py-3 px-6 font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing ? (
                     <span className="flex items-center justify-center">
-                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white dark:text-black" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -493,7 +486,7 @@ export default function CheckoutPage() {
                   )}
                 </button>
 
-                <div className="mt-4 flex items-center justify-center space-x-2 text-sm text-gray-600">
+                <div className="mt-4 flex items-center justify-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                   </svg>
