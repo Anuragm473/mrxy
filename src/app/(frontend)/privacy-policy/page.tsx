@@ -253,7 +253,7 @@ const PrivacyPolicy = () => {
                 </div>
                 <div className="flex items-start gap-3">
                   <span className="font-bold">Address:</span>
-                  <span>mrxycaps Customer Service<br />Mumbai, Maharashtra, India</span>
+                  <span><br />ground floor, Saikrupa society, Building no 58, G1/2/3/4, Nehru Nagar, Kurla, Mumbai, Maharashtra 400024</span>
                 </div>
               </div>
             </div>
