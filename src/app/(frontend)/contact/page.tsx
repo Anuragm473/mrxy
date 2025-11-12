@@ -108,14 +108,14 @@ export default function ContactPage() {
             "@type": "ContactPage",
             "name": "Contact Mr.Xy",
             "description": "Contact page for Mr.Xy premium headwear brand",
-            "url": "https://your-domain.com/contact",
+            "url": "https://www.mrxycaps.in/contact",
             "mainEntity": {
               "@type": "Organization",
               "name": "Mr.Xy",
               "contactPoint": [
                 {
                   "@type": "ContactPoint",
-                  "telephone": "+91-XXXXXXXXXX",
+                  "telephone": "+91-9920910956",
                   "contactType": "customer service",
                   "email": "support@mrxy.com",
                   "availableLanguage": ["English", "Hindi"]

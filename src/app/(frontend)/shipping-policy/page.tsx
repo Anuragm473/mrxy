@@ -416,7 +416,7 @@ const ShippingPolicy = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="font-bold">Phone:</span>
-                  <span>+91-XXXX-XXXXXX</span>
+                  <span>+91-99209-10956</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="font-bold">Website:</span>
