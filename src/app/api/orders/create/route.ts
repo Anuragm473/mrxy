@@ -63,9 +63,10 @@ export async function POST(req: NextRequest) {
       },
     });
 
+
     // Create order in database
     const order = await Order.create({
-      user: decoded.userId,
+      user: decoded.id,
       items,
       shippingAddress,
       subTotal,

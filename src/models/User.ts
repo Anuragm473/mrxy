@@ -20,6 +20,7 @@ export interface IUser extends Document {
   lastName: string;
   email: string;
   phone:string;
+  orders:[];
   password: string;
   addresses: IAddress[];
   role: "user" | "admin";
@@ -45,6 +46,7 @@ const UserSchema = new Schema<IUser>(
     firstName: { type: String, required: true },
     lastName: { type: String },
     phone:{type:String,unique:true},
+    orders:{type:[mongoose.Types.ObjectId]},
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     addresses: [AddressSchema],

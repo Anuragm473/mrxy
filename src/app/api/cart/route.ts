@@ -23,7 +23,6 @@ export async function GET(req: Request) {
 
     return NextResponse.json(user.cart);
   } catch (err) {
-    console.log("GET /api/cart error:", err);
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }

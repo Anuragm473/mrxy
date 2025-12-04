@@ -103,7 +103,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateQuantity = async (productId: string, newQty: number) => {
-    console.log(productId, newQty);
     
     if (newQty <= 0) {
       return removeFromCart(productId);

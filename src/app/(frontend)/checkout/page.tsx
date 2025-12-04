@@ -53,7 +53,6 @@ export default function CheckoutPage() {
             'Authorization': `Bearer ${token}`
           }
         });
-        console.log(response)
 
         if (!response.ok) {
           throw new Error('Failed to fetch user data');
@@ -148,69 +147,88 @@ export default function CheckoutPage() {
   };
 
   const initializeRazorpayPayment = async (orderId: string, razorpayOrderId: string) => {
-    if (!razorpayLoaded) {
-      alert('Payment system is loading. Please try again.');
-      return;
-    }
+  if (!razorpayLoaded) {
+    alert('Payment system is loading. Please try again.');
+    return;
+  }
 
-    const options = {
-      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-      amount: total * 100,
-      currency: "INR",
-      name: "Your Store Name",
-      description: "Order Payment",
-      order_id: razorpayOrderId,
-      handler: async function (response: any) {
+  const options = {
+    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+    amount: total * 100,
+    currency: "INR",
+    name: "Mr.XY Caps",
+    description: "Order Payment",
+    order_id: razorpayOrderId,
+    handler: async function (response: any) {
+      try {
+        setIsProcessing(true);
+        const token = localStorage.getItem('token');
+
+        const verifyResponse = await fetch('/api/orders/verify-payment', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            orderId,
+            razorpayOrderId: response.razorpay_order_id,
+            razorpayPaymentId: response.razorpay_payment_id,
+            razorpaySignature: response.razorpay_signature,
+          }),
+        });
+
+        if (!verifyResponse.ok) {
+          throw new Error('Payment verification failed');
+        }
+
+        clearCart();
+        router.push(`/my-orders?success=true&orderId=${orderId}`);
+      } catch (error) {
+        console.error('Payment verification error:', error);
+        alert('Payment verification failed. Please contact support.');
+      } finally {
+        setIsProcessing(false);
+      }
+    },
+    prefill: {
+      name: user?.name || "",
+      email: user?.email || "",
+      contact: user?.phone || "",
+    },
+    theme: { color: "#000000" },
+    modal: {
+      ondismiss: async function() {
+        // Called when user closes the Razorpay modal (no payment completed)
+        setIsProcessing(false);
         try {
-          setIsProcessing(true);
           const token = localStorage.getItem('token');
-          
-          const verifyResponse = await fetch('/api/orders/verify-payment', {
-            method: 'POST',
+          // Try to delete the order created on server
+          const resp = await fetch(`/api/orders/${orderId}`, {
+            method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              orderId,
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
-            }),
+            }
           });
-
-          if (!verifyResponse.ok) {
-            throw new Error('Payment verification failed');
+          if (!resp.ok) {
+            console.warn('Failed to delete order after modal close', await resp.text());
+          } else {
+            console.log('Order deleted due to modal dismissal');
           }
-
-          clearCart();
-          router.push(`/my-orders?success=true&orderId=${orderId}`);
-        } catch (error) {
-          console.error('Payment verification error:', error);
-          alert('Payment verification failed. Please contact support.');
+        } catch (err) {
+          console.error('Error deleting order after modal dismiss:', err);
         } finally {
-          setIsProcessing(false);
-        }
-      },
-      prefill: {
-        name: user?.name || "",
-        email: user?.email || "",
-        contact: user?.phone || "",
-      },
-      theme: {
-        color: "#000000",
-      },
-      modal: {
-        ondismiss: function() {
-          setIsProcessing(false);
           alert('Payment cancelled. You can retry when ready.');
         }
       }
-    };
-
-    const razorpay = new window.Razorpay(options);
-    razorpay.open();
+    }
   };
+
+  const razorpay = new window.Razorpay(options);
+  razorpay.open();
+};
+
 
   const handlePlaceOrder = async () => {
     if (!validateForm()) {
@@ -235,7 +253,7 @@ export default function CheckoutPage() {
         image: item.product.images?.[0] || "",
       }));
 
-      const response = await fetch('/api/orders/create', {
+      const response:any = await fetch('/api/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -250,14 +268,14 @@ export default function CheckoutPage() {
           totalAmount: total,
         }),
       });
-      console.log(await response.json())
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.error || 'Failed to create order');
       }
 
-      const { orderId, razorpayOrderId } = await response.json();
+      const data=await response.json()
+      const { orderId, razorpayOrderId } = data;
       
       await initializeRazorpayPayment(orderId, razorpayOrderId);
     } catch (error: any) {

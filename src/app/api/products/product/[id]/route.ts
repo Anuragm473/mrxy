@@ -47,7 +47,6 @@ export async function DELETE(req: Request, { params }: { params: any }) {
     await dbConnect();
 
     const { id } = params;
-    console.log("Deleting product with ID:", id);
 
     const deletedProduct = await Product.findByIdAndDelete(id);
 

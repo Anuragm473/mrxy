@@ -52,3 +52,21 @@ export async function PATCH(req:any, { params }:any) {
     return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
+ 
+export async function DELETE(req:any, { params }:any) {
+  try {
+    await dbConnect();
+    const authHeader = req.headers.get("authorization");
+    if (!authHeader?.startsWith("Bearer ")) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const token = authHeader.split(" ")[1];
+    const decoded: any = verifyToken(token);
+
+    const order = await Order.findByIdAndDelete(params.id);
+    return NextResponse.json(order);
+  } catch (err) {
+    console.error(err);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
+  }
+}

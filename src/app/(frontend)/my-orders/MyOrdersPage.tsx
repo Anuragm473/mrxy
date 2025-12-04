@@ -68,7 +68,7 @@ export default function MyOrdersPageContent() {
       }
 
       try {
-        const response = await fetch('/api/orders/my-orders', {
+        const response = await fetch('/api/orders', {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -83,7 +83,7 @@ export default function MyOrdersPageContent() {
         }
 
         const data = await response.json();
-        setOrders(data.orders || []);
+        setOrders(data || []);
       } catch (error: any) {
         console.error('Error fetching orders:', error);
         setError(error.message || 'Failed to load orders');

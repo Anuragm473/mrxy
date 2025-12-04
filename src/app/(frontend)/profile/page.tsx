@@ -46,7 +46,6 @@ const UserProfile = () => {
             }
         })
         const data=await response.json()
-        console.log(data)
         setUserData(data.user)
         setRecommendedProducts(data.suggestedProducts.user)
         setRecentOrders(data.orders.user)
