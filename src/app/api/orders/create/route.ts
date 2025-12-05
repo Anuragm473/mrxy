@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { items, shippingAddress, subTotal, tax, shippingFee, totalAmount } = body;
+    console.log(body)
 
     // Validate required fields
     if (!items || items.length === 0) {
@@ -65,6 +66,7 @@ export async function POST(req: NextRequest) {
         userId: decoded.userId,
       },
     });
+    console.log(razorpayOrder)
 
 
     // Create order in database
