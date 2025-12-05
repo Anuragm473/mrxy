@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
         razorpayOrderId: razorpayOrder.id,
       },
     });
+    console.log({success:true})
 
     return NextResponse.json({
       success: true,
@@ -91,6 +92,7 @@ export async function POST(req: NextRequest) {
       razorpayOrderId: razorpayOrder.id,
     });
   } catch (error: any) {
+    console.log("error",error)
     console.error("Order creation error:", error);
     return NextResponse.json(
       { error: error || "Failed to create order" },

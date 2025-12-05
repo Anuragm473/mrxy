@@ -263,6 +263,7 @@ export default function CheckoutPage() {
           totalAmount: total,
         }),
       });
+      console.log(response)
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -270,6 +271,7 @@ export default function CheckoutPage() {
       }
 
       const data=await response.json()
+      console.log(data)
       const { orderId, razorpayOrderId } = data;
       
       await initializeRazorpayPayment(orderId, razorpayOrderId);
