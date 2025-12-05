@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CartProvider } from "@/context/CartContext";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,6 +52,10 @@ export default function RootLayout({
         {/* 👇 Prevents dark mode auto inversion on mobile */}
         <meta name="color-scheme" content="light only" />
         <meta name="theme-color" content="#000000" />
+        <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        onError={() => alert('Failed to load payment system')}
+      />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col bg-white text-black`}

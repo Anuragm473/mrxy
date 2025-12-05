@@ -16,6 +16,7 @@ export async function POST(req: NextRequest) {
 
     // Verify authentication
     const authHeader = req.headers.get("authorization");
+    console.log(authHeader)
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return NextResponse.json(
         { error: "Unauthorized" },

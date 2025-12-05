@@ -314,11 +314,6 @@ export default function CheckoutPage() {
 
   return (
     <>
-      <Script
-        src="https://checkout.razorpay.com/v1/checkout.js"
-        onLoad={() => setRazorpayLoaded(true)}
-        onError={() => alert('Failed to load payment system')}
-      />
       
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
         <div className="container mx-auto px-4 max-w-6xl">
