@@ -25,7 +25,6 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState(false);
   const [cartWithProducts, setCartWithProducts] = useState<any[]>([]);
-  const [razorpayLoaded, setRazorpayLoaded] = useState(false);
   
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress>({
     apartmentName: "",
@@ -147,10 +146,6 @@ export default function CheckoutPage() {
   };
 
   const initializeRazorpayPayment = async (orderId: string, razorpayOrderId: string) => {
-  if (!razorpayLoaded) {
-    alert('Payment system is loading. Please try again.');
-    return;
-  }
 
   const options = {
     key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
@@ -481,7 +476,7 @@ export default function CheckoutPage() {
 
                 <button
                   onClick={handlePlaceOrder}
-                  disabled={isProcessing || !razorpayLoaded}
+                  disabled={isProcessing}
                   className="w-full bg-black dark:bg-white text-white dark:text-black py-3 px-6 font-medium hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isProcessing ? (
@@ -492,9 +487,7 @@ export default function CheckoutPage() {
                       </svg>
                       Processing...
                     </span>
-                  ) : !razorpayLoaded ? (
-                    'Loading Payment...'
-                  ) : (
+                  ) :  (
                     'Proceed to Payment'
                   )}
                 </button>
