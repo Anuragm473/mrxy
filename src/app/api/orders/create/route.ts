@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     const authHeader = req.headers.get("authorization");
     console.log(authHeader)
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      console.log(authHeader?.startsWith("Bearer"))
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 401 }
@@ -29,6 +30,7 @@ export async function POST(req: NextRequest) {
     
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET!);
+      console.log(decoded)
     } catch (error) {
       return NextResponse.json(
         { error: "Invalid token" },
