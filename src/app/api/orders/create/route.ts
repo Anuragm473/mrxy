@@ -27,6 +27,10 @@ export async function POST(req: NextRequest) {
 
     const token = authHeader.split(" ")[1];
     let decoded: any;
+    console.log({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
+})
     
     try {
       decoded = jwt.verify(token, process.env.JWT_SECRET!);
@@ -40,7 +44,6 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
     const { items, shippingAddress, subTotal, tax, shippingFee, totalAmount } = body;
-    console.log(body)
 
     // Validate required fields
     if (!items || items.length === 0) {
@@ -66,7 +69,6 @@ export async function POST(req: NextRequest) {
         userId: decoded.userId,
       },
     });
-    console.log(razorpayOrder)
 
 
     // Create order in database
@@ -84,7 +86,6 @@ export async function POST(req: NextRequest) {
         razorpayOrderId: razorpayOrder.id,
       },
     });
-    console.log({success:true})
 
     return NextResponse.json({
       success: true,
@@ -92,7 +93,6 @@ export async function POST(req: NextRequest) {
       razorpayOrderId: razorpayOrder.id,
     });
   } catch (error: any) {
-    console.log("error",error)
     console.error("Order creation error:", error);
     return NextResponse.json(
       { error: error || "Failed to create order" },
