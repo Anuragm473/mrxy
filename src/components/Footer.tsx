@@ -145,7 +145,7 @@ export const Footer = () => {
         </div>
 
         {/* Newsletter Section */}
-        <div className="border-t border-gray-800 pt-8 mb-8">
+        {/* <div className="border-t border-gray-800 pt-8 mb-8">
           <div className="max-w-xl mx-auto text-center">
             <h3 className="text-xl font-bold mb-2">Subscribe to Our Newsletter</h3>
             <p className="text-gray-400 text-sm mb-4">
@@ -163,6 +163,7 @@ export const Footer = () => {
             </div>
           </div>
         </div>
+      </div> */}
       </div>
 
       {/* Bottom Bar */}
